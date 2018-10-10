@@ -19,8 +19,7 @@ class UsersTableInsertAdminSeeder extends Seeder
 	    $admin->email = 'admin@test.com';
 	    $admin->email_verified_at = Carbon::now()->toDateTimeString();
     	$admin->password = bcrypt('123456');
-    	$admin->created_at = Carbon::now()->toDateTimeString();
-    	$admin->updated_at = Carbon::now()->toDateTimeString();
+        $admin->remember_token = str_random(10);
 	    $admin->save();
     }
 }

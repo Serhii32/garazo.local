@@ -4,82 +4,46 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreUserRequest;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        return view('home');
+        $pageTitle = 'Страница администратора';
+        return view('admin.home-index', compact(['pageTitle']));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function edit()
     {
-        //
+        $admin = Auth::user();
+        $pageTitle = 'Настройки профиля';
+        return view('admin.home-edit', compact(['admin', 'pageTitle']));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function update(StoreUserRequest $request)
     {
-        //
+        $admin =  Auth::user();
+        $admin->name = $request->name;
+        if ($admin->email != $request->email) {
+            $admin->email_verified_at = null;
+        }
+        $admin->email = $request->email;
+        if($request->password) {
+            $admin->password = Hash::make($request->password);
+        }
+        if ($request->avatar != null) {
+            if($admin->avatar) {
+                Storage::disk('uploaded_img')->delete($admin->avatar);
+            }
+            $admin->avatar = $request->avatar->store('img/common/avatars/admin', ['disk' => 'uploaded_img']);
+        }
+        $admin->save();
+        return redirect()->route('admin.home.index')->with(['message' => 'Данные профиля успешно обновлены']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

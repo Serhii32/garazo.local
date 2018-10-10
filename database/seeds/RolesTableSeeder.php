@@ -13,10 +13,10 @@ class RolesTableSeeder extends Seeder
     public function run()
     {
         $role_admin = new Role();
-	    $role_admin->name = 'Администратор';
+	    $role_admin->name = 'admin';
 	    $role_admin->save();
 	    $role_user = new Role();
-	    $role_user->name = 'Пользователь';
+	    $role_user->name = 'user';
 	    $role_user->save();
 	}
 }

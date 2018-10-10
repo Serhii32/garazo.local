@@ -8,6 +8,13 @@ class FrontPagesController extends Controller
 {
     public function index()
     {
-    	return view('')
+    	$pageTitle = 'Главная';
+    	return view('index', compact(['pageTitle']));
+    }
+
+    public function search(Request $request)
+    {
+    	$searchPhrase = $request->searchPhrase;
+    	return view('search', compact(['searchPhrase']));
     }
 }
