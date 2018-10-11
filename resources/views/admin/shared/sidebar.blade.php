@@ -22,13 +22,16 @@
                 <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="#">Добавить новость</a>
             </li>
             <li class="list-group-item list-group-item-action p-0">
-                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="#">Категории новостей</a>
+                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="{{route('admin.recordsCategories.index')}}">Категории новостей</a>
             </li>
             <li class="list-group-item list-group-item-action p-0">
                 <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="#">Список заказов</a>
             </li>
             <li class="list-group-item list-group-item-action p-0">
                 <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="#">Список клиентов</a>
+            </li>
+            <li class="list-group-item list-group-item-action p-0">
+                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="#">SEO теги страниц</a>
             </li>
         </ul>
     </div>

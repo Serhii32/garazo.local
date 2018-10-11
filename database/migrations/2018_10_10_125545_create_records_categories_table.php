@@ -16,6 +16,10 @@ class CreateRecordsCategoriesTable extends Migration
         Schema::create('records_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
+            $table->text('short_description')->nullable();
+            $table->string('titleSEO')->nullable();
+            $table->text('descriptionSEO')->nullable();
+            $table->string('keywordsSEO')->nullable();
             $table->string('photo')->nullable();
             $table->integer('parent_id')->default(0);
             $table->timestamps();

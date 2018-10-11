@@ -16,6 +16,9 @@ class CreateRecordsTable extends Migration
         Schema::create('records', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
+            $table->string('main_photo')->nullable();
+            $table->text('short_description')->nullable();
+            $table->text('description')->nullable();
             $table->integer('category_id')->nullable()->unsigned();
             $table->foreign('category_id')->references('id')->on('records_categories');
             $table->timestamps();

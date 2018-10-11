@@ -5,8 +5,7 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             @include('admin.shared.sidebar')
-            <div class="col-12 col-md-9 p-4">
-                <h2 class="text-center font-weight-bold text-uppercase">Настройки профиля</h2>
+            <div class="col-12 col-md-9 p-2">
                 @if (session('message'))
                     <div class="alert alert-info" role="alert">
                         <button type="button" class="close" data-dismiss="alert">×</button> 
@@ -15,6 +14,7 @@
                 @endif
                 <div class="py-4 bg-white border rounded border-light shadow">
                     {!! Form::open(['route'=>'admin.home.update', 'method' => 'put', 'class' => 'py-4', 'files' => true]) !!}
+                        <h2 class="text-center font-weight-bold text-uppercase pb-5">Настройки профиля</h2>
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-12 col-md-6">

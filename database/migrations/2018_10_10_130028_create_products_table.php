@@ -16,12 +16,19 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
+            $table->decimal('price', 10, 2);
+            $table->string('main_photo')->nullable();
+            $table->text('short_description')->nullable();
+            $table->text('description')->nullable();
+            $table->integer('most_saled')->nullable();
+            $table->boolean('novelty')->default(0);
+            $table->boolean('promo_action')->default(0);
+            $table->boolean('best')->default(0);
             $table->integer('category_id')->nullable()->unsigned();
             $table->foreign('category_id')->references('id')->on('products_categories');
             $table->timestamps();
         });
-    }
-
+    }            
     /**
      * Reverse the migrations.
      *

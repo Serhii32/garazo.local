@@ -23,11 +23,15 @@ class ProductsCategoriesController extends Controller
     {
         $category = new ProductsCategory;
         $category->title = $request->title;
+        $category->short_description = $request->short_description;
+        $category->titleSEO = $request->titleSEO;
+        $category->descriptionSEO = $request->descriptionSEO;
+        $category->keywordsSEO = $request->keywordsSEO;
         $category->parent_id = $request->parent_id ?: 0;
         $category->save();
         $last_insereted_id = $category->id;
         if ($request->photo != null) {
-            $category->photo = $request->photo->store('img/common/categories/' . $last_insereted_id, ['disk' => 'uploaded_img']);
+            $category->photo = $request->photo->store('img/common/productsCategories/' . $last_insereted_id, ['disk' => 'uploaded_img']);
             $category->save();
         }
         return back()->with('message', 'Новая категория успешно добавлена');
@@ -39,7 +43,8 @@ class ProductsCategoriesController extends Controller
         $products = Product::where('category_id', $id)->get();
         $allCategories = ProductsCategory::pluck('title','id')->all();
         unset($allCategories[$id]);
-        return view('admin.products-categories.categories-edit', compact(['category', 'allCategories', 'products']));
+        $pageTitle = 'Редактировать ' . $category->title;
+        return view('admin.products-categories.categories-edit', compact(['category', 'allCategories', 'products', 'pageTitle']));
     }
     
     public function update(StoreCategoryRequest $request, int $id)
@@ -47,13 +52,17 @@ class ProductsCategoriesController extends Controller
         $category = ProductsCategory::findOrFail($id);
         $category->title = $request->title;
         $category->parent_id = $request->parent_id ?: 0;
+        $category->short_description = $request->short_description;
+        $category->titleSEO = $request->titleSEO;
+        $category->descriptionSEO = $request->descriptionSEO;
+        $category->keywordsSEO = $request->keywordsSEO;
         $category->save();
         $last_insereted_id = $category->id;
         if ($request->photo != null) {
             if($category->photo) {
                 Storage::disk('uploaded_img')->delete($category->photo);
             }
-            $category->photo = $request->photo->store('img/common/categories/' . $last_insereted_id, ['disk' => 'uploaded_img']);
+            $category->photo = $request->photo->store('img/common/productsCategories/' . $last_insereted_id, ['disk' => 'uploaded_img']);
             $category->save();
         }
         return redirect()->route('admin.productsCategories.index')->with(['message' => 'Категория успешно обновлена']);
@@ -61,8 +70,8 @@ class ProductsCategoriesController extends Controller
     
     public function destroy(int $id)
     {
-        Storage::disk('uploaded_img')->deleteDirectory('img/common/categories/' . $id);
-        $products = Products::where('category_id', $id)->get();
+        Storage::disk('uploaded_img')->deleteDirectory('img/common/productsCategories/' . $id);
+        $products = Product::where('category_id', $id)->get();
         foreach ($products as $product) {
             $product->category_id = null;
             $product->save();
@@ -78,7 +87,7 @@ class ProductsCategoriesController extends Controller
     }
     public function removeProductFromCategory(int $id, string $type)
     {
-        $product = ProductsCategory::findOrFail($id);
+        $product = Product::findOrFail($id);
         $product->category_id = null;
         $product->save();
         return back()->with(['message' => 'Товар успешно удален с категории']);

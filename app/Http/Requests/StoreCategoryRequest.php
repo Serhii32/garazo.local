@@ -25,7 +25,11 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             'title' => 'required|max:255',
+            'short_description' => 'max:1000',
             'parent_id' => 'integer|nullable',
+            'titleSEO' => 'max:255',
+            'descriptionSEO' => 'max:1000',
+            'keywordsSEO' => 'max:255',
             'photo' => 'mimetypes:image/jpeg,image/png,image/jpg,image/gif|max:20000'
         ];
     }

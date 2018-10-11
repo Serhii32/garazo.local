@@ -26,6 +26,11 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth','verified'], 'as' 
 	Route::get('home/edit', ['as' => 'home.edit', 'uses' => 'HomeController@edit']);
 	Route::match(['put', 'patch'], 'home/store', ['as' => 'home.update', 'uses' => 'HomeController@update']);
 	Route::resource('productsCategories', 'ProductsCategoriesController')->except(['create', 'show']);
+	Route::delete('/productsCategories/removeProductFromCategory/{productId}', ['as' => 'productsCategories.removeProductFromCategory', 'uses' => 'ProductsCategoriesController@removeProductFromCategory']);
+	Route::resource('recordsCategories', 'RecordsCategoriesController')->except(['create', 'show']);
+	Route::delete('/recordsCategories/removeRecordFromCategory/{recordId}', ['as' => 'recordsCategories.removeRecordFromCategory', 'uses' => 'RecordsCategoriesController@removeRecordFromCategory']);
+	Route::resource('records', 'RecordsController');
+	Route::resource('products', 'RecordsController');
 
 });
 
@@ -43,3 +48,6 @@ Route::group(['namespace' => 'User', 'middleware' => ['auth','verified'], 'as' =
 //create good head on pages with all headers
 //admin email, where orders sending
 //admin and user page with nofollow tag
+//admin can delete users with message to email
+//most saled every order of the product will increase by one
+//add seo options in admin panel
