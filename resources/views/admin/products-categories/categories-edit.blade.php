@@ -15,7 +15,7 @@
                 <div class="py-4 bg-white border rounded border-light shadow">
                     {!! Form::open(['route'=> ['admin.productsCategories.update', $category->id], 'method' => 'put', 'files' => true]) !!}
                         <h2 class="text-center font-weight-bold text-uppercase pb-5">Редактировать {{ $category->title }}</h2>
-                        <div class="container">
+                        <div class="container-fluid">
                             <div class="row">
                                 <div class="col-12 col-md-6">
                                     <img class="img-thumbnail img-fluid" src="{{$category->photo ? asset($category->photo) : asset('img/common/default.png')}}" alt="{{ $category->title }}">
@@ -75,15 +75,16 @@
                                 @foreach($products as $product)
                                     {!! Form::open(['route'=> ['admin.productsCategories.removeProductFromCategory', $product->id], 'method' => 'delete', 'class' => 'col-12 col-sm-6 col-md-4 col-lg-3 my-3', 'onsubmit' => 'return confirm("Подтвердить удаление?")']) !!}
                                         <div class="card h-100 shadow p-2">
-                                            <a class="card-link text-secondary p-1" href="{{route('admin.products.show', $product->id)}}">
+                                            <a class="card-link text-secondary p-1" href="{{route('admin.products.edit', $product->id)}}">
                                                 <div class="text-center"><img class="img-fluid img-thumbnail" src="{{$product->main_photo ? asset($product->main_photo) : asset('img/common/default.png')}}" alt="{{ $product->title }}"></div>
                                                 <h4 class="text-center text-uppercase">{{$product->title}}</h4>
                                             </a>
-                                            {!! Form::submit('Удалить', ['class'=>'btn btn-danger position-relative mb-0 mt-auto mx-auto w-75 text-uppercase font-weight-bold']) !!}
+                                            {!! Form::submit('Удалить', ['class'=>'btn btn-danger mb-0 mt-auto mx-auto w-75 text-uppercase font-weight-bold']) !!}
                                         </div>
                                     {!! Form::close() !!}
                                 @endforeach
                             </div>
+                            <div class="custom-links py-4">{{$products->links()}}</div>
                         </div>
 
                     @endif

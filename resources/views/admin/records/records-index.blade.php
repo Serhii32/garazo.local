@@ -19,18 +19,27 @@
                     </div>
                 @endif
                 <div class="container py-4">
-                    <h2 class="text-center font-weight-bold text-uppercase">Список товаров</h2>
-                    <div class="row justify-content-center">
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 my-3">
-                            <div class="card h-100 shadow">
-                                <a class="card-link text-secondary p-1" href="#">
-                                    <h1 class="display-1 text-center"><i class="fas fa-clipboard-list"></i></h1>
-                                    <h4 class="text-center text-uppercase">Список товаров</h4>
-                                </a>
-                            </div>
+                    <h2 class="text-center font-weight-bold text-uppercase">Список новостей</h2>
+                    @if(count($records))
+                        <div class="row justify-content-center">
+                            @foreach($records as $record)
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 my-3">
+                                    <div class="card h-100 shadow p-2">
+                                        <a class="card-link text-secondary p-1" href="{{route('admin.records.edit', $record->id)}}">
+                                            <div class="text-center"><img class="img-fluid img-thumbnail" src="{{$record->main_photo ? asset($record->main_photo) : asset('img/common/default.png')}}" alt="{{ $record->title }}"></div>
+                                            <h4 class="text-center text-uppercase">{{$record->title}}</h4>
+                                        </a>
+                                        {!! Form::open(['route'=> ['admin.records.destroy', $record->id], 'class'=>'btn btn-danger mb-0 mt-auto mx-auto w-100 p-0', 'method' => 'delete', 'onsubmit' => 'return confirm("Подтвердить удаление?")']) !!}
+                                            {!! Form::submit('Удалить', ['class'=>'btn btn-danger mb-0 mt-auto mx-auto w-100 text-uppercase font-weight-bold']) !!}
+                                        {!! Form::close() !!}
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
-                        
-                    </div>
+                        <div class="custom-links py-4">{{$records->links()}}</div>
+                    @else
+                        <h3 class="text-center font-weight-bold text-uppercase m-4">Новости отсутствуют</h3>
+                    @endif
                 </div>
             </div>
         </div>

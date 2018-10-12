@@ -163,6 +163,9 @@ return [
         // Forms & HTML
         Collective\Html\HtmlServiceProvider::class,
 
+        // CKEditor
+        Unisharp\Ckeditor\ServiceProvider::class,
+
     ],
 
     /*

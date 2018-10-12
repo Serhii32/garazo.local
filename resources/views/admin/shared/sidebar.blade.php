@@ -16,10 +16,10 @@
                 <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="{{route('admin.productsCategories.index')}}">Категории товаров</a>
             </li>
             <li class="list-group-item list-group-item-action p-0">
-                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="#">Список новостей</a>
+                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="{{route('admin.records.index')}}">Список новостей</a>
             </li>
             <li class="list-group-item list-group-item-action p-0">
-                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="#">Добавить новость</a>
+                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="{{route('admin.records.create')}}">Добавить новость</a>
             </li>
             <li class="list-group-item list-group-item-action p-0">
                 <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="{{route('admin.recordsCategories.index')}}">Категории новостей</a>
@@ -32,6 +32,9 @@
             </li>
             <li class="list-group-item list-group-item-action p-0">
                 <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="#">SEO теги страниц</a>
+            </li>
+            <li class="list-group-item list-group-item-action p-0">
+                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="#">Загруженные изображения</a>
             </li>
         </ul>
     </div>

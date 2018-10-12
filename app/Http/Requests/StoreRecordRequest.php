@@ -13,7 +13,7 @@ class StoreRecordRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,14 @@ class StoreRecordRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required|max:255',
+            'short_description' => 'max:1000',
+            'description' => 'max:65000',
+            'titleSEO' => 'max:255',
+            'descriptionSEO' => 'max:1000',
+            'keywordsSEO' => 'max:255',
+            'main_photo' => 'mimetypes:image/jpeg,image/png,image/jpg,image/gif|max:20000',
+            'category' => 'integer|nullable',
         ];
     }
 }

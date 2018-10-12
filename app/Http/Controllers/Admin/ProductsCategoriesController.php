@@ -40,7 +40,7 @@ class ProductsCategoriesController extends Controller
     public function edit(int $id)
     {
         $category = ProductsCategory::findOrFail($id);
-        $products = Product::where('category_id', $id)->get();
+        $products = Product::where('category_id', $id)->paginate(12);
         $allCategories = ProductsCategory::pluck('title','id')->all();
         unset($allCategories[$id]);
         $pageTitle = 'Редактировать ' . $category->title;

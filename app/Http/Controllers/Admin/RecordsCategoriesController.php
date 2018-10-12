@@ -40,7 +40,7 @@ class RecordsCategoriesController extends Controller
     public function edit(int $id)
     {
         $category = RecordsCategory::findOrFail($id);
-        $records = Record::where('category_id', $id)->get();
+        $records = Record::where('category_id', $id)->paginate(12);
         $allCategories = RecordsCategory::pluck('title','id')->all();
         unset($allCategories[$id]);
         $pageTitle = 'Редактировать ' . $category->title;
