@@ -39,7 +39,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth','verified'], 'as' 
 	Route::delete('uploaded-images/{imageName}', ['as' => 'uploaded-images.destroy', 'uses' => 'CKEditorImageUploadController@destroy']);
 
 	Route::resource('records', 'RecordsController')->except(['show']);
-	Route::resource('products', 'RecordsController')->except(['show']);
+	Route::resource('products', 'ProductsController')->except(['show']);
 
 });
 
@@ -60,3 +60,4 @@ Route::group(['namespace' => 'User', 'middleware' => ['auth','verified'], 'as' =
 //most saled every order of the product will increase by one
 //add seo options in admin panel
 //add possibility to add atributes to goods like in wordpress
+//change attribute values pivot table to attribute name has many values attributes names and values send to view with json add js delete to attributes blocks

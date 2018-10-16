@@ -52,33 +52,33 @@ class RecordsController extends Controller
         return view('admin.records.records-edit', compact(['record', 'categories', 'pageTitle']));
     }
     
-    // public function update(StoreRecordRequest $request, int $id)
-    // {
-    //     $record = Record::findOrFail($id);
-    //     $record->title = $request->title;
-    //     $record->description = $request->description;
-    //     $record->short_description = $request->short_description;
-    //     $record->category_id = $request->category;
-    //     $record->titleSEO = $request->titleSEO;
-    //     $record->descriptionSEO = $request->descriptionSEO;
-    //     $record->keywordsSEO = $request->keywordsSEO;
-    //     $record->save();
-    //     $last_insereted_id = $record->id;
-    //     if ($request->main_photo != null) {
-    //         if($record->main_photo) {
-    //             Storage::disk('uploaded_img')->delete($record->main_photo);
-    //         }
-    //         $record->main_photo = $request->main_photo->store('img/site/blog/' . $last_insereted_id);
-    //         $record->save();
-    //     }
-    //     return redirect()->route('admin/blog.index')->with(['message' => 'Новина успішно оновлена']);
-    // }
+    public function update(StoreRecordRequest $request, int $id)
+    {
+        $record = Record::findOrFail($id);
+        $record->title = $request->title;
+        $record->description = $request->description;
+        $record->short_description = $request->short_description;
+        $record->category_id = $request->category;
+        $record->titleSEO = $request->titleSEO;
+        $record->descriptionSEO = $request->descriptionSEO;
+        $record->keywordsSEO = $request->keywordsSEO;
+        $record->save();
+        $last_insereted_id = $record->id;
+        if ($request->main_photo != null) {
+            if($record->main_photo) {
+                Storage::disk('uploaded_img')->delete($record->main_photo);
+            }
+            $record->main_photo = $request->main_photo->store('img/common/records/' . $last_insereted_id, ['disk' => 'uploaded_img']);
+            $record->save();
+        }
+        return redirect()->route('admin.records.index')->with(['message' => 'Новость успешно обновлена']);
+    }
     
-    // public function destroy(int $id)
-    // {
-    //     Storage::disk('local')->deleteDirectory('img/site/blog/' . $id);
-    //     $item = Blog::findOrFail($id);
-    //     $item->delete();
-    //     return redirect()->route('admin/blog.index')->with(['message' => 'Новина успішно видалена']);
-    // }
+    public function destroy(int $id)
+    {
+        Storage::disk('uploaded_img')->deleteDirectory('img/common/records/' . $id);
+        $record = Record::findOrFail($id);
+        $record->delete();
+        return redirect()->route('admin.records.index')->with(['message' => 'Новость успешно удалена']);
+    }
 }

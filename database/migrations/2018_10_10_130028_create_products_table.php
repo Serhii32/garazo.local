@@ -20,7 +20,7 @@ class CreateProductsTable extends Migration
             $table->string('main_photo')->nullable();
             $table->text('short_description')->nullable();
             $table->text('description')->nullable();
-            $table->integer('most_saled')->nullable();
+            $table->integer('most_saled')->unsigned()->default(0);
             $table->boolean('novelty')->default(0);
             $table->boolean('promo_action')->default(0);
             $table->boolean('best')->default(0);

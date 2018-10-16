@@ -6,12 +6,6 @@
         <div class="row justify-content-center">
             @include('admin.shared.sidebar')
             <div class="col-12 col-md-9 p-4">
-                @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        <button type="button" class="close" data-dismiss="alert">×</button> 
-                        {{ session('status') }}
-                    </div>
-                @endif
                 @if (session('message'))
                     <div class="alert alert-info" role="alert">
                         <button type="button" class="close" data-dismiss="alert">×</button> 

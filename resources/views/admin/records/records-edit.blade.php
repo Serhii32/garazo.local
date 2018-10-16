@@ -20,9 +20,9 @@
                                 <div class="col-12 col-md-6">
                                     <img class="img-thumbnail img-fluid" src="{{$record->main_photo ? asset($record->main_photo) : asset('img/common/default.png')}}" alt="{{ $record->title }}">
                                     <div class="form-group">
-                                        {!! Form::label('photo', 'Вибрать главное фото новости:', ['class' => 'text-uppercase font-weight-bold']) !!}
-                                        {!! Form::file('photo', ($errors->has('photo') ? ['class'=>'form-control is-invalid'] : ['class'=>'form-control'])) !!}
-                                        <span class="text-danger">{{ $errors->first('photo') }}</span>
+                                        {!! Form::label('main_photo', 'Вибрать главное фото новости:', ['class' => 'text-uppercase font-weight-bold']) !!}
+                                        {!! Form::file('main_photo', ($errors->has('main_photo') ? ['class'=>'form-control is-invalid'] : ['class'=>'form-control'])) !!}
+                                        <span class="text-danger">{{ $errors->first('main_photo') }}</span>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
@@ -37,9 +37,9 @@
                                         <span class="text-danger">{{ $errors->first('short_description') }}</span>
                                     </div>
                                     <div class="form-group">
-                                        {!! Form::label('parent_id', 'Вибрать категорию:', ['class' => 'text-uppercase font-weight-bold']) !!}
-                                        {!! Form::select('parent_id',$categories, $record->category_id, ['placeholder'=>'Вибрать категорию'] + ($errors->has('parent_id') ? ['class'=>'form-control is-invalid'] : ['class'=>'form-control'])) !!}
-                                        <span class="text-danger">{{ $errors->first('parent_id') }}</span>
+                                        {!! Form::label('category', 'Вибрать категорию:', ['class' => 'text-uppercase font-weight-bold']) !!}
+                                        {!! Form::select('category',$categories, $record->category_id, ['placeholder'=>'Вибрать категорию'] + ($errors->has('category') ? ['class'=>'form-control is-invalid'] : ['class'=>'form-control'])) !!}
+                                        <span class="text-danger">{{ $errors->first('category') }}</span>
                                     </div>
                                     <div class="form-group">
                                         {!! Form::label('titleSEO', 'SEO заголовок:', ['class' => 'text-uppercase font-weight-bold']) !!}
