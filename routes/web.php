@@ -61,3 +61,4 @@ Route::group(['namespace' => 'User', 'middleware' => ['auth','verified'], 'as' =
 //add seo options in admin panel
 //add possibility to add atributes to goods like in wordpress
 //change attribute values pivot table to attribute name has many values attributes names and values send to view with json add js delete to attributes blocks
+//add productattributes item in sidebar list

@@ -56,7 +56,7 @@
                             <span class="text-danger">{{ $errors->first('keywordsSEO') }}</span>
                         </div>
                         <div class="form-group">
-                            {!! Form::submit('Добавить новость', ['class'=>'btn btn-success w-100 text-uppercase font-weight-bold']) !!}
+                            {!! Form::submit('Добавить товар', ['class'=>'btn btn-success w-100 text-uppercase font-weight-bold']) !!}
                         </div>
                     {!! Form::close() !!}
                 </div>             
