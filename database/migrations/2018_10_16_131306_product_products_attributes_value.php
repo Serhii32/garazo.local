@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ProductProductsAttributesName extends Migration
+class ProductProductsAttributesValue extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class ProductProductsAttributesName extends Migration
      */
     public function up()
     {
-        Schema::create('product_products_attributes_name', function (Blueprint $table) {
+        Schema::create('product_products_attributes_value', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('product_id')->nullable()->unsigned();
+            $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products');
-            $table->integer('products_attributes_name_id')->nullable()->unsigned();
-            $table->foreign('products_attributes_name_id', 'pan_id_foreign')->references('id')->on('products_attributes_names');
+            $table->integer('products_attributes_value_id')->unsigned();
+            $table->foreign('products_attributes_value_id', 'pav1_id_foreign')->references('id')->on('products_attributes_values');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class ProductProductsAttributesName extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_products_attributes_name');
+        Schema::dropIfExists('product_products_attributes_value');
     }
 }

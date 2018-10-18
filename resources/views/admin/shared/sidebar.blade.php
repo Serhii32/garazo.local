@@ -7,10 +7,13 @@
     <div class="m-2 bg-white border border-light shadow rounded">
         <ul class="list-group list-group-flush">
             <li class="list-group-item list-group-item-action p-0">
-                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="#">Список товаров</a>
+                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="{{route('admin.products.index')}}">Список товаров</a>
             </li>
             <li class="list-group-item list-group-item-action p-0">
-                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="#">Добавить товар</a>
+                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="{{route('admin.products.create')}}">Добавить товар</a>
+            </li>
+            <li class="list-group-item list-group-item-action p-0">
+                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="#">Характеристики товаров</a>
             </li>
             <li class="list-group-item list-group-item-action p-0">
                 <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="{{route('admin.productsCategories.index')}}">Категории товаров</a>

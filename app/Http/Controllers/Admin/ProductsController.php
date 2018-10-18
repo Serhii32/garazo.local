@@ -13,6 +13,27 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
 {
+	private $attributesNamesArray;
+	private $attributesValuesArray;
+
+	public function __construct()
+	{
+		$attributesNames = ProductsAttributesName::all();
+        $attributesNamesOnlyNamesCollection = $attributesNames->map(function ($attributesName) {
+		    return $attributesName->only(['name']);
+		});
+		for($i=0; $i < count($attributesNamesOnlyNamesCollection); $i++) {
+			$this->attributesNamesArray[$i] = $attributesNamesOnlyNamesCollection[$i]['name'];
+		}
+		$attributesValues = ProductsAttributesValue::all();
+        $attributesValuesOnlyValuesCollection = $attributesValues->map(function ($attributesValue) {
+		    return $attributesValue->only(['value']);
+		});
+		for($i=0; $i < count($attributesValuesOnlyValuesCollection); $i++) {
+			$this->attributesValuesArray[$i] = $attributesValuesOnlyValuesCollection[$i]['value'];
+		}
+	}
+
     public function index()
     {
         $products = Product::paginate(12);
@@ -25,12 +46,11 @@ class ProductsController extends Controller
     {
         $categories = ProductsCategory::pluck('title','id')->all();
         $pageTitle = 'Добавить товар';
-        return view('admin.products.products-create', compact(['categories', 'pageTitle']));
+        return view('admin.products.products-create', compact(['categories', 'pageTitle']), ['attributesNamesArray' => $this->attributesNamesArray, 'attributesValuesArray' => $this->attributesValuesArray]);
     }
     
     public function store(StoreProductRequest $request)
     {
-
         $product = new Product();
         $product->title = $request->title;
         $product->price = $request->price;
@@ -49,44 +69,58 @@ class ProductsController extends Controller
             $product->main_photo = $request->main_photo->store('img/common/products/' . $last_insereted_id, ['disk' => 'uploaded_img']);
             $product->save();
         }
-
-        // if ($request->attributes_names != null) {
-            
-        //     $productsAttributesNames = ProductsAttributesName::all();
-
-        //     for($i = 0; $i < count($request->attributes_names); $i++) {
-            	
-        //     	$productAttributesNameExist = 0;
-
-        //     	foreach($productsAttributesNames as $productsAttributesName) {
-        //     		if($request->attributes_names[$i] == $productsAttributesName->name) {
-        //     			$productAttributesNameExist = $productsAttributesName->id;
-        //     			break;
-        //     		}
-        //     	}
-
-        //     	if ($productAttributesNameExist) {
-        //     		$productsAttributesNameNew = ProductsAttributesName::find($productAttributesNameExist);
-        //     	} else {
-        //     		$productsAttributesNameNew = new ProductsAttributesName();
-	       //      	$productsAttributesNameNew->name = $request->attributes_names[$i];
-	       //      	$productsAttributesNameNew->save();
-        //     	}
-
-        //     	$productsAttributesNameNew->products()->attach($last_insereted_id); 
-
-        //     }
-        // }
+        if ($request->attributes_names != null && $request->attributes_values != null) {
+            $productsAttributesNames = ProductsAttributesName::all();
+            $productsAttributesValues = ProductsAttributesValue::all();
+            for($i = 0; $i < count($request->attributes_names); $i++) {
+            	$productAttributesNameExist = 0;
+            	$productAttributesValueExist = 0;
+            	foreach($productsAttributesNames as $productsAttributesName) {
+            		if($request->attributes_names[$i] == $productsAttributesName->name) {
+            			$productAttributesNameExist = $productsAttributesName->id;
+            			break;
+            		}
+            	}
+            	foreach($productsAttributesValues as $productsAttributesValue) {
+            		if($request->attributes_values[$i] == $productsAttributesValue->value) {
+            			$productAttributesValueExist = $productsAttributesValue->id;
+            			break;
+            		}
+            	}
+            	if ($productAttributesNameExist) {
+            		$productsAttributesNameNew = ProductsAttributesName::find($productAttributesNameExist);
+            	} else {
+            		$productsAttributesNameNew = new ProductsAttributesName();
+	            	$productsAttributesNameNew->name = $request->attributes_names[$i];
+	            	$productsAttributesNameNew->save();
+            	}
+            	$productsAttributesNameNew->products()->attach($last_insereted_id); 
+            	if ($productAttributesValueExist) {
+            		$productsAttributesValueNew = ProductsAttributesValue::find($productAttributesValueExist);
+            	} else {
+            		$productsAttributesValueNew = new ProductsAttributesValue();
+	            	$productsAttributesValueNew->value = $request->attributes_values[$i];
+	            	$productsAttributesValueNew->save();
+            	}
+            	$productsAttributesValueNew->products()->attach($last_insereted_id); 
+            	$productsAttributesValueNew->names()->attach($productsAttributesNameNew->id);
+            }
+        }
         return redirect()->route('admin.products.index')->with(['message' => 'Товар успешно добавлен']);
     }
     
-    // public function edit(int $id)
-    // {
-    //     $categories = RecordsCategory::pluck('title','id')->all();
-    //     $record = Record::findOrFail($id);
-    //     $pageTitle = 'Редактировать ' . $record->title;
-    //     return view('admin.records.records-edit', compact(['record', 'categories', 'pageTitle']));
-    // }
+    public function edit(int $id)
+    {
+        $categories = ProductsCategory::pluck('title','id')->all();
+        $product = Product::findOrFail($id);
+        // dd($product->attributesNames()->get());
+        // foreach ($product->attributesNames()->get() as $attributeName) {
+        // 	dd($attributeName->values()->get());
+        // }
+        
+        $pageTitle = 'Редактировать ' . $product->title;
+        return view('admin.products.products-edit', compact(['product', 'categories', 'pageTitle']), ['attributesNamesArray' => $this->attributesNamesArray, 'attributesValuesArray' => $this->attributesValuesArray]);
+    }
     
     // public function update(StoreRecordRequest $request, int $id)
     // {
