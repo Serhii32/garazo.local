@@ -14,7 +14,7 @@
                     </div>
                 @endif
                 <div class="py-4 bg-white border rounded border-light shadow">
-                    {!! Form::open(['route'=> ['admin.products.update', $product->id], 'method' => 'put', 'files' => true]) !!}
+                    {!! Form::open(['route'=> ['admin.products.update', $product->id], 'autocomplete' => 'off', 'method' => 'put', 'files' => true]) !!}
                         <h2 class="text-center font-weight-bold text-uppercase pb-5">Редактировать {{ $product->title }}</h2>
                         <div class="container-fluid">
                             <div class="row">
@@ -84,13 +84,16 @@
                                 @if(!empty(old('attributes_names')) || !empty($product->attributesNames()->get()))
                                     @php $i = 0; @endphp
                                     @if(!empty($product->attributesNames()->get()))
-                                        {{-- @for($i; $i < count($product->attributesNames()->get()); $i++)
+                                        @for($i; $i < count($product->attributesNames()->get()); $i++)
                                             <div class="existed-attributes form-group py-4 border-bottom" id="attribute{{$i+1}}">
                                                 <div class="row">
                                                     <p class="text-uppercase font-weight-bold col-12 col-sm-6">Характеристика {{$i+1}}</p>
-                                                    <div class="col-12 col-sm-6">
-                                                        <a class="float-right btn btn-danger text-uppercase font-weight-bold" onclick="deleteAttribute('attribute{{$i+1}}')" href="javascript:void(0)">Удалить</a>
-                                                    </div>
+                                                    {{-- <div class="col-12 col-sm-6">
+                                                        <a class="float-right btn btn-danger text-uppercase font-weight-bold" href="">Удалить</a>
+                                                    </div> --}}
+                                                    {!! Form::open(['route'=> ['admin.products.productAttributeDestroy', $product->id, $product->attributesNames()->get()[$i]->id, $product->attributesNames()->get()[$i]->values()->whereHas('products', function($query)use($product){$query->where('product_id', '=', $product->id);})->first()->id], 'method' => 'delete', 'class' => 'col-12 col-sm-6', 'onsubmit' => 'return confirm("Подтвердить удаление?")']) !!}
+                                                        {!! Form::submit('Удалить', ['class'=>'float-right btn btn-danger text-uppercase font-weight-bold']) !!}
+                                                    {!! Form::close() !!}
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-12 col-sm-6 py-2">
@@ -99,7 +102,7 @@
                                                         @if($errors->has('attributes_names.'.$i)) class="form-control autocomplete-list-target-name is-invalid" 
                                                         @else class="form-control autocomplete-list-target-name"
                                                         @endif 
-                                                        value="{{old('attributes_names.'.$i)}}">
+                                                        value="{{$product->attributesNames()->get()[$i]->name}}">
                                                         <span class="text-danger">{{ $errors->first('attributes_names.'.$i) }}</span>
                                                     </div>
                                                     <div class="col-12 col-sm-6 py-2">
@@ -108,12 +111,12 @@
                                                         @if($errors->has('attributes_values.'.$i)) class="form-control autocomplete-list-target-value is-invalid"
                                                         @else class="form-control autocomplete-list-target-value"
                                                         @endif
-                                                        value="{{old('attributes_values.'.$i)}}">
+                                                        value="{{$product->attributesNames()->get()[$i]->values()->whereHas('products', function($query)use($product){$query->where('product_id', '=', $product->id);})->first()->value}}">
                                                         <span class="text-danger">{{ $errors->first('attributes_values.'.$i) }}</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                        @endfor --}}
+                                        @endfor
                                     @endif
                                     @if(!empty(old('attributes_names')))
                                         @for($i; $i < count(old('attributes_names')); $i++)
