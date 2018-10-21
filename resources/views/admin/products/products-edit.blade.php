@@ -88,12 +88,17 @@
                                             <div class="existed-attributes form-group py-4 border-bottom" id="attribute{{$i+1}}">
                                                 <div class="row">
                                                     <p class="text-uppercase font-weight-bold col-12 col-sm-6">Характеристика {{$i+1}}</p>
-                                                    {{-- <div class="col-12 col-sm-6">
-                                                        <a class="float-right btn btn-danger text-uppercase font-weight-bold" href="">Удалить</a>
-                                                    </div> --}}
-                                                    {!! Form::open(['route'=> ['admin.products.productAttributeDestroy', $product->id, $product->attributesNames()->get()[$i]->id, $product->attributesNames()->get()[$i]->values()->whereHas('products', function($query)use($product){$query->where('product_id', '=', $product->id);})->first()->id], 'method' => 'delete', 'class' => 'col-12 col-sm-6', 'onsubmit' => 'return confirm("Подтвердить удаление?")']) !!}
+                                                   
+                                                    <div class="col-12 col-sm-6">
+                                                        <a class="float-right btn btn-danger text-uppercase font-weight-bold" onclick="return confirm('Подтвердить удаление?')" href="{{route('admin.products.productAttributeDestroy', $product->id, $product->attributesNames()->get()[$i]->id, $product->attributesNames()->get()[$i]->values()->whereHas('products', function($query)use($product){$query->where('product_id', '=', $product->id);})->first()->id)}}">Удалить</a>
+                                                    </div>
+
+
+                                                    {{-- {!! Form::open(['route'=> ['admin.products.productAttributeDestroy', $product->id, $product->attributesNames()->get()[$i]->id, $product->attributesNames()->get()[$i]->values()->whereHas('products', function($query)use($product){$query->where('product_id', '=', $product->id);})->first()->id], 'method' => 'delete', 'class' => 'col-12 col-sm-6', 'onsubmit' => 'return confirm("Подтвердить удаление?")']) !!}
                                                         {!! Form::submit('Удалить', ['class'=>'float-right btn btn-danger text-uppercase font-weight-bold']) !!}
-                                                    {!! Form::close() !!}
+                                                    {!! Form::close() !!} --}}
+
+
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-12 col-sm-6 py-2">

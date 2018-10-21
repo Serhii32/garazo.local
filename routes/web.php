@@ -40,7 +40,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth','verified'], 'as' 
 	
 	Route::resource('records', 'RecordsController')->except(['show']);
 
-	Route::delete('/products/productAttributeDestroy/{productId}/{attributeNameId}/{attributeValueId}', ['as' => 'products.productAttributeDestroy', 'uses' => 'ProductsController@productAttributeDestroy']);
+	Route::get('/products/productAttributeDestroy/{productId}/{attributeNameId}/{attributeValueId}', ['as' => 'products.productAttributeDestroy', 'uses' => 'ProductsController@productAttributeDestroy']);
 
 	Route::resource('products', 'ProductsController')->except(['show']);
 

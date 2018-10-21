@@ -154,6 +154,8 @@ class ProductsController extends Controller
         }
 
         if ($request->attributes_names != null && $request->attributes_values != null) {
+            $product->attributesNames()->detach();
+            $product->attributesValues()->detach();
             for($i = 0; $i < count($request->attributes_names); $i++) {
             	$productsAttributesNames = ProductsAttributesName::all();
             	$productsAttributesValues = ProductsAttributesValue::all();
