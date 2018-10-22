@@ -20,33 +20,37 @@ Route::post('search', ['as' => 'page.search', 'uses' => 'FrontPagesController@se
 
 Auth::routes(['verify' => true]);
 
-Route::group(['namespace' => 'Admin', 'middleware' => ['auth','verified'], 'as' => 'admin.', 'prefix'=>'admin'], function () {
+Route::group(['namespace' => 'Admin', 'middleware' => 'auth', 'as' => 'admin.', 'prefix'=>'admin'], function () {
 
 	Route::get('home', ['as' => 'home.index', 'uses' => 'HomeController@index']);
 	Route::get('home/edit', ['as' => 'home.edit', 'uses' => 'HomeController@edit']);
 	Route::match(['put', 'patch'], 'home/store', ['as' => 'home.update', 'uses' => 'HomeController@update']);
 	
-	Route::resource('productsCategories', 'ProductsCategoriesController')->except(['create', 'show']);
+	Route::group(['middleware' => 'verified'], function () {
 
-	Route::delete('productsCategories/removeProductFromCategory/{productId}', ['as' => 'productsCategories.removeProductFromCategory', 'uses' => 'ProductsCategoriesController@removeProductFromCategory']);
+		Route::resource('productsCategories', 'ProductsCategoriesController')->except(['create', 'show']);
 
-	Route::resource('recordsCategories', 'RecordsCategoriesController')->except(['create', 'show']);
+		Route::delete('productsCategories/removeProductFromCategory/{productId}', ['as' => 'productsCategories.removeProductFromCategory', 'uses' => 'ProductsCategoriesController@removeProductFromCategory']);
 
-	Route::delete('recordsCategories/removeRecordFromCategory/{recordId}', ['as' => 'recordsCategories.removeRecordFromCategory', 'uses' => 'RecordsCategoriesController@removeRecordFromCategory']);
+		Route::resource('recordsCategories', 'RecordsCategoriesController')->except(['create', 'show']);
 
-	Route::post('upload-image', ['as' => 'upload-image', 'uses' => 'CKEditorImageUploadController@uploadImage']);
-	Route::get('uploaded-images', ['as' => 'uploaded-images.index', 'uses' => 'CKEditorImageUploadController@index']);
-	Route::delete('uploaded-images/{imageName}', ['as' => 'uploaded-images.destroy', 'uses' => 'CKEditorImageUploadController@destroy']);
-	
-	Route::resource('records', 'RecordsController')->except(['show']);
+		Route::delete('recordsCategories/removeRecordFromCategory/{recordId}', ['as' => 'recordsCategories.removeRecordFromCategory', 'uses' => 'RecordsCategoriesController@removeRecordFromCategory']);
 
-	Route::get('products/productAttributeDestroy/{productId}/{attributeNameId}/{attributeValueId}', ['as' => 'products.productAttributeDestroy', 'uses' => 'ProductsController@productAttributeDestroy']);
+		Route::post('upload-image', ['as' => 'upload-image', 'uses' => 'CKEditorImageUploadController@uploadImage']);
+		Route::get('uploaded-images', ['as' => 'uploaded-images.index', 'uses' => 'CKEditorImageUploadController@index']);
+		Route::delete('uploaded-images/{imageName}', ['as' => 'uploaded-images.destroy', 'uses' => 'CKEditorImageUploadController@destroy']);
+		
+		Route::resource('records', 'RecordsController')->except(['show']);
 
-	Route::resource('products', 'ProductsController')->except(['show']);
+		Route::get('products/productAttributeDestroy/{productId}/{attributeNameId}/{attributeValueId}', ['as' => 'products.productAttributeDestroy', 'uses' => 'ProductsController@productAttributeDestroy']);
+
+		Route::resource('products', 'ProductsController')->except(['show']);
+
+	});
 
 });
 
-Route::group(['namespace' => 'User', 'middleware' => ['auth','verified'], 'as' => 'user.', 'prefix'=>'user'], function () {
+Route::group(['namespace' => 'User', 'middleware' => 'auth', 'as' => 'user.', 'prefix'=>'user'], function () {
 
 	Route::get('home', ['as' => 'home.index', 'uses' => 'HomeController@index']);
 	Route::get('home/edit', ['as' => 'home.edit', 'uses' => 'HomeController@edit']);
@@ -62,6 +66,5 @@ Route::group(['namespace' => 'User', 'middleware' => ['auth','verified'], 'as' =
 //admin can delete users with message to email
 //most saled every order of the product will increase by one
 //add seo options in admin panel
-//add productattributes item in sidebar list
-//change auth pages and error pages in views
-//non verificated user can enter in settings and change email
+//change error pages in views
+//orders in user panel will be on the home page

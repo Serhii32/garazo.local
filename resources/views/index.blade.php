@@ -11,7 +11,7 @@
 				        <ul class="list-group list-group-flush">
 
 				        	@foreach($productsCategories as $productsCategory)
-								<li class="list-group-item p-3">
+								<li class="list-group-item p-2">
 					                <a class="card-link text-dark font-weight-bold text-uppercase" href="#">― {{$productsCategory->title}} </a>
 					                @if(count($productsCategory->childs))
 						                <a class="float-right" data-toggle="collapse" href="#c{{$productsCategory->id}}"><i data-toggle="collapse" class="fas fa-angle-down"></i></a>

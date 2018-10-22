@@ -14,6 +14,8 @@ class HomeController extends Controller
 
     public function index()
     {
+        // dd(Auth::user()->role()->first()->id === 1);
+        $this->authorize('manage', Record::class);
         $pageTitle = 'Страница администратора';
         return view('admin.home-index', compact(['pageTitle']));
     }

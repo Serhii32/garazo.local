@@ -6,9 +6,9 @@
 .custom-links {
 	font-size: 1.5em;
 }
-a {
+/*a {
 	word-break: break-all;
-}
+}*/
 button {
 	white-space: normal !important;
 }
