@@ -207,24 +207,23 @@ class ProductsController extends Controller
         return redirect()->route('admin.products.index')->with(['message' => 'Товар успешно обновлен']);
     }
     
-    // public function destroy(int $id)
-    // {
-    //     Storage::disk('uploaded_img')->deleteDirectory('img/common/records/' . $id);
-    //     $record = Record::findOrFail($id);
-    //     $record->delete();
-    //     return redirect()->route('admin.records.index')->with(['message' => 'Новость успешно удалена']);
-    // }
+    public function destroy(int $id)
+    {
+        Storage::disk('uploaded_img')->deleteDirectory('img/common/products/' . $id);
+    	$product = Product::findOrFail($id);
+    	$product->attributesNames()->detach();
+        $product->attributesValues()->detach();
+        $product->delete();
+        return redirect()->route('admin.products.index')->with(['message' => 'Товар успешно удален']);
+    }
 
     public function productAttributeDestroy(int $productId, int $attributeNameId, int $attributeValueId) 
     {
-    	$attributeName = ProductsAttributesName::findOrFail($attributeNameId);
-    	$attributeValue = ProductsAttributesValue::findOrFail($attributeValueId);
+    	$product = Product::findOrFail($productId);
+    	$product->attributesNames()->detach($attributeNameId);
+        $product->attributesValues()->detach($attributeValueId);
 
-    	// $itemPhoto = ItemsPhoto::findOrFail($photoId);
-     //    $itenPhotoFilePath = $itemPhoto->filename;
-     //    $itemPhoto->delete();
-     //    Storage::disk('local')->delete($itenPhotoFilePath);
-     //    return redirect()->route('admin/items.edit', $itemId);
+        return redirect()->back()->with(['message' => 'Характеристика успешно удалена']);
     }
 }
 

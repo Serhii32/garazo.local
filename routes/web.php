@@ -28,11 +28,11 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth','verified'], 'as' 
 	
 	Route::resource('productsCategories', 'ProductsCategoriesController')->except(['create', 'show']);
 
-	Route::delete('/productsCategories/removeProductFromCategory/{productId}', ['as' => 'productsCategories.removeProductFromCategory', 'uses' => 'ProductsCategoriesController@removeProductFromCategory']);
+	Route::delete('productsCategories/removeProductFromCategory/{productId}', ['as' => 'productsCategories.removeProductFromCategory', 'uses' => 'ProductsCategoriesController@removeProductFromCategory']);
 
 	Route::resource('recordsCategories', 'RecordsCategoriesController')->except(['create', 'show']);
 
-	Route::delete('/recordsCategories/removeRecordFromCategory/{recordId}', ['as' => 'recordsCategories.removeRecordFromCategory', 'uses' => 'RecordsCategoriesController@removeRecordFromCategory']);
+	Route::delete('recordsCategories/removeRecordFromCategory/{recordId}', ['as' => 'recordsCategories.removeRecordFromCategory', 'uses' => 'RecordsCategoriesController@removeRecordFromCategory']);
 
 	Route::post('upload-image', ['as' => 'upload-image', 'uses' => 'CKEditorImageUploadController@uploadImage']);
 	Route::get('uploaded-images', ['as' => 'uploaded-images.index', 'uses' => 'CKEditorImageUploadController@index']);
@@ -40,7 +40,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth','verified'], 'as' 
 	
 	Route::resource('records', 'RecordsController')->except(['show']);
 
-	Route::get('/products/productAttributeDestroy/{productId}/{attributeNameId}/{attributeValueId}', ['as' => 'products.productAttributeDestroy', 'uses' => 'ProductsController@productAttributeDestroy']);
+	Route::get('products/productAttributeDestroy/{productId}/{attributeNameId}/{attributeValueId}', ['as' => 'products.productAttributeDestroy', 'uses' => 'ProductsController@productAttributeDestroy']);
 
 	Route::resource('products', 'ProductsController')->except(['show']);
 
@@ -62,8 +62,6 @@ Route::group(['namespace' => 'User', 'middleware' => ['auth','verified'], 'as' =
 //admin can delete users with message to email
 //most saled every order of the product will increase by one
 //add seo options in admin panel
-//add possibility to add atributes to goods like in wordpress
-//change attribute values pivot table to attribute name has many values attributes names and values send to view with json add js delete to attributes blocks
 //add productattributes item in sidebar list
-//delete one attribute from product
-//product edit form in form will be conflict
+//change auth pages and error pages in views
+//non verificated user can enter in settings and change email

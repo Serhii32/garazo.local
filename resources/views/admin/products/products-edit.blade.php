@@ -90,7 +90,7 @@
                                                     <p class="text-uppercase font-weight-bold col-12 col-sm-6">Характеристика {{$i+1}}</p>
                                                    
                                                     <div class="col-12 col-sm-6">
-                                                        <a class="float-right btn btn-danger text-uppercase font-weight-bold" onclick="return confirm('Подтвердить удаление?')" href="{{route('admin.products.productAttributeDestroy', $product->id, $product->attributesNames()->get()[$i]->id, $product->attributesNames()->get()[$i]->values()->whereHas('products', function($query)use($product){$query->where('product_id', '=', $product->id);})->first()->id)}}">Удалить</a>
+                                                        <a class="float-right btn btn-danger text-uppercase font-weight-bold" onclick="return confirm('Подтвердить удаление?')" href="{{route('admin.products.productAttributeDestroy', [$product->id, $product->attributesNames()->get()[$i]->id, $product->attributesNames()->get()[$i]->values()->whereHas('products', function($query)use($product){$query->where('product_id', '=', $product->id);})->first()->id])}}">Удалить</a>
                                                     </div>
 
 
