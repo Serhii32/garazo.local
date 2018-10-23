@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+	<link href="{{ asset('css/frontend-index-slider.css') }}" rel="stylesheet">
 	@include('shared.front-header')
 	<main class="py-4">
 		<div class="container-fluid">
@@ -59,163 +60,8 @@
 						</div>
 
 					</div>
-
-					<style>
-						.customSlideshow .customSlides {
-							display: none;
-						}
-
-						.customSlideshow img {
-							vertical-align: middle; 
-							width:100%;
-						}
-
-						/* Slideshow container */
-						.customSlideshow .slideshow-container {
-						  position: relative;
-						  margin: auto;
-						}
-
-						/* Caption text */
-						.customSlideshow .customSlidesText {
-						  color: #f2f2f2;
-						  font-size: 15px;
-						  padding: 8px 12px;
-						  position: absolute;
-						  bottom: 8px;
-						  width: 100%;
-						  text-align: center;
-						}
-
-						/* Number text (1/3 etc) */
-						.customSlideshow .numbertext {
-						  color: #f2f2f2;
-						  font-size: 15px;
-						  padding: 8px 12px;
-						  position: absolute;
-						  top: 8px;
-						  width: 100%;
-						}
-
-						/* The dots/bullets/indicators */
-						.customSlideshow .customSlidesDot {
-						  cursor: pointer;
-						  height: 15px;
-						  width: 15px;
-						  margin: 0 2px;
-						  background-color: #bbb;
-						  border-radius: 50%;
-						  display: inline-block;
-						  transition: background-color 0.6s ease;
-						}
-
-						.customSlideshow .customSlidesDots {
-							text-align: center;
-							padding: 10px;
-						}
-
-						.customSlideshow .customSlidesActive {
-						  background-color: #717171;
-						}
-
-						/* Fading animation */
-						.customSlideshow .customSlidesFade {
-						  -webkit-animation-name: customSlidesFade;
-						  -webkit-animation-duration: 1.5s;
-						  animation-name: customSlidesFade;
-						  animation-duration: 1.5s;
-						}
-
-						/* Next & previous buttons */
-						.customSlideshow .customSlidesPrev, .customSlideshow .customSlidesNext {
-						  cursor: pointer;
-						  position: absolute;
-						  top: 50%;
-						  width: auto;
-						  padding: 16px;
-						  margin-top: -22px;
-						  color: white;
-						  font-weight: bold;
-						  font-size: 18px;
-						  transition: 0.6s ease;
-						  border-radius: 0 3px 3px 0;
-						}
-
-						/* Position the "next button" to the right */
-						.customSlideshow .customSlidesNext {
-						  right: 0;
-						  border-radius: 3px 0 0 3px;
-						}
-
-						/* On hover, add a black background color with a little bit see-through */
-						.customSlideshow .customSlidesPrev:hover, .customSlideshow .customSlidesNext:hover {
-						  background-color: rgba(0,0,0,0.8);
-						}
-
-						.customSlideshow .customSlidesActive, .customSlideshow .customSlidesDot:hover {
-						  background-color: #717171;
-
-						@-webkit-keyframes customSlidesFade {
-						  from {opacity: .4} 
-						  to {opacity: 1}
-						}
-
-						@keyframes customSlidesFade {
-						  from {opacity: .4} 
-						  to {opacity: 1}
-						}
-
-						/* On smaller screens, decrease text size */
-						@media only screen and (max-width: 300px) {
-						  .customSlideshow .customSlidesText {font-size: 11px}
-						}
-					</style>
-
 					<script>
-						var slideIndex = 0;
-						showSlides(slideIndex);
-
-						function plusSlides(n) {
-						  showSlides(slideIndex += n);
-						}
-
-						function currentSlide(n) {
-						  showSlides(slideIndex = n);
-						}
-
-						function showSlides(n) {
-						  var i;
-						  var slides = document.getElementsByClassName("customSlides");
-						  var dots = document.getElementsByClassName("customSlidesDot");
-						  if (n > slides.length) {slideIndex = 1}    
-						  if (n < 1) {slideIndex = slides.length}
-						  for (i = 0; i < slides.length; i++) {
-						      slides[i].style.display = "none";  
-						  }
-						  for (i = 0; i < dots.length; i++) {
-						      dots[i].className = dots[i].className.replace(" customSlidesActive", "");
-						  }
-						  slides[slideIndex-1].style.display = "block";  
-						  dots[slideIndex-1].className += " customSlidesActive";
-						}
-
-						autoShowSlides(slideIndex);
-						function autoShowSlides() {
-						    var i;
-						    var slides = document.getElementsByClassName("customSlides");
-						    var dots = document.getElementsByClassName("customSlidesDot");
-						    for (i = 0; i < slides.length; i++) {
-						       slides[i].style.display = "none";  
-						    }
-						    slideIndex++;
-						    if (slideIndex > slides.length) {slideIndex = 1}    
-						    for (i = 0; i < dots.length; i++) {
-						        dots[i].className = dots[i].className.replace(" customSlidesActive", "");
-						    }
-						    slides[slideIndex-1].style.display = "block";  
-						    dots[slideIndex-1].className += " customSlidesActive";
-						    setTimeout(autoShowSlides, 7000);
-						}
+						
 					</script>
 					@if(count($productsCategories))
 						<h3 class="text-dark font-weight-bold text-uppercase text-center p-4">Категории товаров</h3>
@@ -287,4 +133,5 @@
 		</div>
 	</main>
 	@include('shared.front-footer')
+	<script src="{{ asset('js/frontend-index-slider.js') }}"></script>
 @endsection
