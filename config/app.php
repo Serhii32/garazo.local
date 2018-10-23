@@ -166,6 +166,9 @@ return [
         // CKEditor
         Unisharp\Ckeditor\ServiceProvider::class,
 
+        // Shopping Cart
+        Darryldecode\Cart\CartServiceProvider::class,
+
     ],
 
     /*
@@ -218,6 +221,9 @@ return [
         // Forms & HTML
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+
+        // Shopping Cart
+        'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
 
     ],
 

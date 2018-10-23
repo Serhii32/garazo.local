@@ -13,6 +13,7 @@ class RecordsController extends Controller
 {
     public function index()
     {
+        $this->authorize('manage', \App\Record::class);
         $records = Record::paginate(12);
         $pageTitle = 'Список новостей';
         return view('admin.records.records-index', compact(['records', 'pageTitle']));
@@ -20,6 +21,7 @@ class RecordsController extends Controller
     
     public function create()
     {
+        $this->authorize('manage', \App\Record::class);
         $categories = RecordsCategory::pluck('title','id')->all();
         $pageTitle = 'Добавить новость';
         return view('admin.records.records-create', compact(['categories', 'pageTitle']));
@@ -27,6 +29,7 @@ class RecordsController extends Controller
     
     public function store(StoreRecordRequest $request)
     {
+        $this->authorize('manage', \App\Record::class);
         $record = new Record();
         $record->title = $request->title;
         $record->description = $request->description;
@@ -46,6 +49,7 @@ class RecordsController extends Controller
     
     public function edit(int $id)
     {
+        $this->authorize('manage', \App\Record::class);
         $categories = RecordsCategory::pluck('title','id')->all();
         $record = Record::findOrFail($id);
         $pageTitle = 'Редактировать ' . $record->title;
@@ -54,6 +58,7 @@ class RecordsController extends Controller
     
     public function update(StoreRecordRequest $request, int $id)
     {
+        $this->authorize('manage', \App\Record::class);
         $record = Record::findOrFail($id);
         $record->title = $request->title;
         $record->description = $request->description;
@@ -76,6 +81,7 @@ class RecordsController extends Controller
     
     public function destroy(int $id)
     {
+        $this->authorize('manage', \App\Record::class);
         Storage::disk('uploaded_img')->deleteDirectory('img/common/records/' . $id);
         $record = Record::findOrFail($id);
         $record->delete();

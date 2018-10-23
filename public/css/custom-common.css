@@ -12,3 +12,6 @@
 button {
 	white-space: normal !important;
 }
+.front-logo {
+	max-height: 110px;
+}

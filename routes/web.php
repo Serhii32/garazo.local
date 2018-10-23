@@ -18,9 +18,11 @@ Route::get('/welcome', function () {
 Route::get('/', ['as' => 'page.index', 'uses' => 'FrontPagesController@index']);
 Route::post('search', ['as' => 'page.search', 'uses' => 'FrontPagesController@search']);
 
+Route::post('addToCart/{productId}', ['as' => 'add-to-cart', 'uses' => 'FrontPagesController@addToCart']);
+
 Auth::routes(['verify' => true]);
 
-Route::group(['namespace' => 'Admin', 'middleware' => 'auth', 'as' => 'admin.', 'prefix'=>'admin'], function () {
+Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'isAdmin'], 'as' => 'admin.', 'prefix'=>'admin'], function () {
 
 	Route::get('home', ['as' => 'home.index', 'uses' => 'HomeController@index']);
 	Route::get('home/edit', ['as' => 'home.edit', 'uses' => 'HomeController@edit']);
@@ -50,7 +52,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth', 'as' => 'admin.', 
 
 });
 
-Route::group(['namespace' => 'User', 'middleware' => 'auth', 'as' => 'user.', 'prefix'=>'user'], function () {
+Route::group(['namespace' => 'User', 'middleware' => ['auth', 'isUser'], 'as' => 'user.', 'prefix'=>'user'], function () {
 
 	Route::get('home', ['as' => 'home.index', 'uses' => 'HomeController@index']);
 	Route::get('home/edit', ['as' => 'home.edit', 'uses' => 'HomeController@edit']);
@@ -58,7 +60,6 @@ Route::group(['namespace' => 'User', 'middleware' => 'auth', 'as' => 'user.', 'p
 
 });
 
-//add policies and authorization in requests
 //add captcha when registering
 //create good head on pages with all headers
 //admin email, where orders sending

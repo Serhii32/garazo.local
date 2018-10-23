@@ -13,6 +13,7 @@ class RecordsCategoriesController extends Controller
 {
     public function index()
     {
+        $this->authorize('manage', \App\RecordsCategory::class);
         $parentCategories = RecordsCategory::where('parent_id', '=', 0)->get();
         $allCategories = RecordsCategory::pluck('title','id')->all();
         $pageTitle = 'Категории новостей';
@@ -21,6 +22,7 @@ class RecordsCategoriesController extends Controller
     
     public function store(StoreCategoryRequest $request)
     {
+        $this->authorize('manage', \App\RecordsCategory::class);
         $category = new RecordsCategory;
         $category->title = $request->title;
         $category->short_description = $request->short_description;
@@ -39,6 +41,7 @@ class RecordsCategoriesController extends Controller
     
     public function edit(int $id)
     {
+        $this->authorize('manage', \App\RecordsCategory::class);
         $category = RecordsCategory::findOrFail($id);
         $records = Record::where('category_id', $id)->paginate(12);
         $allCategories = RecordsCategory::pluck('title','id')->all();
@@ -49,6 +52,7 @@ class RecordsCategoriesController extends Controller
     
     public function update(StoreCategoryRequest $request, int $id)
     {
+        $this->authorize('manage', \App\RecordsCategory::class);
         $category = RecordsCategory::findOrFail($id);
         $category->title = $request->title;
         $category->parent_id = $request->parent_id ?: 0;
@@ -70,6 +74,7 @@ class RecordsCategoriesController extends Controller
     
     public function destroy(int $id)
     {
+        $this->authorize('manage', \App\RecordsCategory::class);
         Storage::disk('uploaded_img')->deleteDirectory('img/common/recordsCategories/' . $id);
         $records = Record::where('category_id', $id)->get();
         foreach ($records as $record) {
@@ -87,6 +92,7 @@ class RecordsCategoriesController extends Controller
     }
     public function removeRecordFromCategory(int $id, string $type)
     {
+        $this->authorize('manage', \App\RecordsCategory::class);
         $record = Record::findOrFail($id);
         $record->category_id = null;
         $record->save();

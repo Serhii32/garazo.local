@@ -217,21 +217,73 @@
 						    setTimeout(autoShowSlides, 7000);
 						}
 					</script>
+					@if(count($productsCategories))
+						<h3 class="text-dark font-weight-bold text-uppercase text-center p-4">Категории товаров</h3>
+						<div class="container">
+							<div class="row justify-content-center">
+	                            @foreach($productsCategories as $productsCategory)
+	                                <div class="col-12 col-sm-6 my-3">
+	                                    <div class="card h-100 shadow p-2">
+	                                    	<div class="row">
+	                                    		<div class="col-12 col-sm-6">
+	                                    			<a class="card-link text-secondary p-1" href="#">
+			                                            <div class="text-center"><img class="img-fluid img-thumbnail" src="{{$productsCategory->photo ? asset($productsCategory->photo) : asset('img/common/default.png')}}" alt="{{ $productsCategory->title }}"></div>
+			                                        </a>
+	                                    		</div>
+	                                    		<div class="col-12 col-sm-6">
+	                                    			<a class="card-link text-secondary p-1" href="#">
+			                                            <h4 class="text-center text-uppercase">{{$productsCategory->title}}</h4>
+			                                        </a>
+			                                        <p class="text-center text-secondary p-1">
+			                                        	{{$productsCategory->short_description}}
+			                                        </p>
+	                                    		</div>
+	                                    	</div>
+	                                    </div>
+	                                </div>
+	                            @endforeach
+	                        </div>
+						</div>
+					@endif
+					
+					@if(count($products))
+						<h3 class="text-dark font-weight-bold text-uppercase text-center p-4">Товары</h3>
+						<div class="container">
+							<div class="row justify-content-center">
+	                            @foreach($products as $product)
+	                                <div class="col-12 col-sm-6 col-md-4 my-3">
+	                                    <div class="card h-100 shadow p-2">
+	                                        <a class="card-link text-secondary p-1" href="#">
+	                                            <div class="text-center">
+	                                            	<img class="img-fluid img-thumbnail" src="{{$product->main_photo ? asset($product->main_photo) : asset('img/common/default.png')}}" alt="{{ $product->title }}">
+	                                            	@if($product->most_saled !== 0 && $product->most_saled >= $most_saled_last)
+	                                            		<span style="position: absolute; top: 0px; right: 0px; z-index: 1; width: 131px; height: 39px; background: url(https://uaprom-uc.prom.st/production/design_template/849/images/ribbon.png) 0 -105px no-repeat; color: #fff; text-align: center; font-size: 13px; line-height: 37px;">Топ продаж</span>
+	                                            	@endif
+	                                            	@if($product->novelty)
+	                                            		<span style="position: absolute; top: 40px; right: 0px; z-index: 1; width: 131px; height: 39px; background: url(https://uaprom-uc.prom.st/production/design_template/849/images/ribbon.png) 0 -165px no-repeat; color: #fff; text-align: center; font-size: 13px; line-height: 37px;">Новинка</span>
+	                                            	@endif
+	                                            	@if($product->promo_action)
+	                                            		<span style="position: absolute; top: 80px; right: 0px; z-index: 1; width: 131px; height: 39px; background: url(https://uaprom-uc.prom.st/production/design_template/849/images/ribbon.png) 0 -222px no-repeat; color: #fff; text-align: center; font-size: 13px; line-height: 37px;">Акция</span>
+	                                            	@endif
+	                                            </div>
+	                                            <h4 class="text-center text-uppercase">{{$product->title}}</h4>
+	                                        </a>
+	                                        <h5 class="text-center text-uppercase text-secondary">Цена: {{$product->price}}</h5>
 
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris posuere dolor tortor, ut finibus odio ultricies molestie. Proin pulvinar tempor bibendum. Mauris sit amet efficitur neque. Mauris vehicula erat sit amet purus semper, a porta mi imperdiet. Sed interdum sagittis vulputate. Vestibulum massa ipsum, imperdiet id cursus at, tincidunt sit amet ante. Vivamus eget nulla sapien. Morbi aliquam dolor eget turpis varius ornare. Sed ut placerat est, ac congue arcu. Suspendisse potenti. Cras id iaculis risus, id rhoncus dolor. Quisque sed eros id urna hendrerit lacinia. Nunc sed diam ante.
+	                                        {!! Form::open(['route'=> ['add-to-cart', $product->id], 'class'=>'mb-0 mt-auto mx-auto w-100 p-0']) !!}
+	                                            {!! Form::submit('Купить', ['class'=>'btn btn-warning mb-0 mt-auto mx-auto w-100 text-uppercase font-weight-bold']) !!}
+	                                        {!! Form::close() !!}
+	                                       
+	                                    </div>
+	                                </div>
+	                            @endforeach
+	                        </div>
+	                        <div class="custom-links py-4">{{$products->links()}}</div>
+						</div>
+					@endif
 
-Aenean eget porttitor orci. Cras sodales ut sapien eget placerat. Nulla tempor orci in ex ultrices, quis malesuada libero pellentesque. Mauris feugiat aliquet bibendum. Quisque vulputate eget ante id imperdiet. Nullam et metus eleifend, volutpat odio id, dapibus arcu. Integer volutpat, nibh eget congue pretium, nulla lorem cursus elit, vitae facilisis justo risus vitae lectus. Nullam tincidunt metus at massa lacinia, non interdum elit consequat. Donec a varius elit, vel condimentum lectus. Cras interdum lectus diam. Suspendisse mattis, nibh ut fringilla faucibus, ligula velit malesuada ligula, eu pretium mauris enim et arcu.
-
-Suspendisse interdum ex ut orci pretium porta. Maecenas dapibus finibus lorem. In in dui ipsum. In eget odio eget erat placerat aliquam non eget eros. Cras dictum tortor in tempus condimentum. Praesent volutpat tincidunt eros, pulvinar tincidunt orci semper eget. Vivamus nec sapien ultricies, ultrices ipsum vitae, volutpat quam. In elit purus, bibendum eu felis fermentum, finibus pharetra augue. Praesent interdum quam vitae tortor molestie, in sagittis dui cursus. Sed blandit scelerisque posuere. Nulla vitae venenatis tellus, sed rhoncus tellus.
-
-Aliquam commodo hendrerit enim, a eleifend neque sagittis ullamcorper. In in libero orci. Donec egestas nisi velit, pretium vestibulum est aliquam eget. Vestibulum sodales volutpat velit sed mollis. Ut porta, nisi vitae interdum efficitur, purus ex cursus ex, at porta massa massa sit amet purus. Sed non diam tincidunt, pellentesque eros non, laoreet turpis. Suspendisse commodo facilisis mattis.
-
-Donec eu libero vel tortor ullamcorper convallis. Aenean bibendum felis sed ex laoreet interdum. Ut tincidunt metus pharetra est eleifend viverra. Maecenas in pharetra velit. Vestibulum sodales lectus nec porta pharetra. In at justo condimentum, vehicula quam scelerisque, pellentesque nibh. Maecenas porta id odio egestas dapibus.
 				</div>
-				
 			</div>			
-		
-		
 		</div>
 	</main>
 	@include('shared.front-footer')

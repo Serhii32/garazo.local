@@ -13,6 +13,7 @@ class ProductsCategoriesController extends Controller
 {
     public function index()
     {
+        $this->authorize('manage', \App\ProductsCategory::class);
         $parentCategories = ProductsCategory::where('parent_id', '=', 0)->get();
         $allCategories = ProductsCategory::pluck('title','id')->all();
         $pageTitle = 'Категории товаров';
@@ -21,6 +22,7 @@ class ProductsCategoriesController extends Controller
     
     public function store(StoreCategoryRequest $request)
     {
+        $this->authorize('manage', \App\ProductsCategory::class);
         $category = new ProductsCategory;
         $category->title = $request->title;
         $category->short_description = $request->short_description;
@@ -39,6 +41,7 @@ class ProductsCategoriesController extends Controller
     
     public function edit(int $id)
     {
+        $this->authorize('manage', \App\ProductsCategory::class);
         $category = ProductsCategory::findOrFail($id);
         $products = Product::where('category_id', $id)->paginate(12);
         $allCategories = ProductsCategory::pluck('title','id')->all();
@@ -49,6 +52,7 @@ class ProductsCategoriesController extends Controller
     
     public function update(StoreCategoryRequest $request, int $id)
     {
+        $this->authorize('manage', \App\ProductsCategory::class);
         $category = ProductsCategory::findOrFail($id);
         $category->title = $request->title;
         $category->parent_id = $request->parent_id ?: 0;
@@ -70,6 +74,7 @@ class ProductsCategoriesController extends Controller
     
     public function destroy(int $id)
     {
+        $this->authorize('manage', \App\ProductsCategory::class);
         Storage::disk('uploaded_img')->deleteDirectory('img/common/productsCategories/' . $id);
         $products = Product::where('category_id', $id)->get();
         foreach ($products as $product) {
@@ -85,8 +90,10 @@ class ProductsCategoriesController extends Controller
         $category->delete();
         return redirect()->route('admin.productsCategories.index')->with(['message' => 'Категория успешно удалена']);
     }
+    
     public function removeProductFromCategory(int $id, string $type)
     {
+        $this->authorize('manage', \App\ProductsCategory::class);
         $product = Product::findOrFail($id);
         $product->category_id = null;
         $product->save();

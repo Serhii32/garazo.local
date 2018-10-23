@@ -36,6 +36,7 @@ class ProductsController extends Controller
 
     public function index()
     {
+        $this->authorize('manage', \App\Product::class);
         $products = Product::paginate(12);
         $most_saled_last = $products->sortByDesc('most_saled')->take(5)->last()->most_saled;
         $pageTitle = 'Список товаров';
@@ -44,6 +45,7 @@ class ProductsController extends Controller
     
     public function create()
     {
+        $this->authorize('manage', \App\Product::class);
         $categories = ProductsCategory::pluck('title','id')->all();
         $pageTitle = 'Добавить товар';
         return view('admin.products.products-create', compact(['categories', 'pageTitle']), ['attributesNamesArray' => $this->attributesNamesArray, 'attributesValuesArray' => $this->attributesValuesArray]);
@@ -51,6 +53,7 @@ class ProductsController extends Controller
     
     public function store(StoreProductRequest $request)
     {
+        $this->authorize('manage', \App\Product::class);
         $product = new Product();
         $product->title = $request->title;
         $product->price = $request->price;
@@ -122,6 +125,7 @@ class ProductsController extends Controller
     
     public function edit(int $id)
     {
+        $this->authorize('manage', \App\Product::class);
         $categories = ProductsCategory::pluck('title','id')->all();
         $product = Product::findOrFail($id);
         $pageTitle = 'Редактировать ' . $product->title;
@@ -130,7 +134,7 @@ class ProductsController extends Controller
     
     public function update(StoreProductRequest $request, int $id)
     {
-
+        $this->authorize('manage', \App\Product::class);
     	$product = Product::findOrFail($id);
         $product->title = $request->title;
         $product->price = $request->price;
@@ -209,6 +213,7 @@ class ProductsController extends Controller
     
     public function destroy(int $id)
     {
+        $this->authorize('manage', \App\Product::class);
         Storage::disk('uploaded_img')->deleteDirectory('img/common/products/' . $id);
     	$product = Product::findOrFail($id);
     	$product->attributesNames()->detach();
@@ -219,6 +224,7 @@ class ProductsController extends Controller
 
     public function productAttributeDestroy(int $productId, int $attributeNameId, int $attributeValueId) 
     {
+        $this->authorize('manage', \App\Product::class);
     	$product = Product::findOrFail($productId);
     	$product->attributesNames()->detach($attributeNameId);
         $product->attributesValues()->detach($attributeValueId);
