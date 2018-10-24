@@ -39,6 +39,11 @@
                                         <span class="text-danger">{{ $errors->first('email') }}</span>
                                     </div>
                                     <div class="form-group">
+                                        {!! Form::label('phone', 'Телефон:', ['class' => 'text-uppercase font-weight-bold']) !!}
+                                        {!! Form::number('phone', old('phone') ? old('phone') :$user->phone, ['placeholder'=>'Телефон'] + ($errors->has('phone') ? ['class'=>'form-control is-invalid'] : ['class'=>'form-control'])) !!}
+                                        <span class="text-danger">{{ $errors->first('phone') }}</span>
+                                    </div>
+                                    <div class="form-group">
                                         {!! Form::label('current_password', 'Пароль:', ['class' => 'text-uppercase font-weight-bold']) !!}
                                         {!! Form::password('current_password', ['placeholder'=>'Пароль'] + ($errors->has('current_password') ? ['class'=>'form-control is-invalid'] : ['class'=>'form-control'])) !!}
                                         <span class="text-danger">{{ $errors->first('current_password') }}</span>
@@ -58,6 +63,11 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    {!! Form::close() !!}
+                    {!! Form::open(['route'=> 'user.home.destroy', 'method' => 'delete', 'class' => 'mt-3', 'onsubmit' => 'return confirm("Подтвердить удаление?")']) !!}
+                        <div class="col-md-6 m-auto">
+                            {!! Form::submit('Удалить аккаунт', ['class'=>'btn btn-danger w-100 text-uppercase font-weight-bold']) !!}
                         </div>
                     {!! Form::close() !!}
                 </div>

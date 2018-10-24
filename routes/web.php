@@ -16,9 +16,14 @@ Route::get('/welcome', function () {
 });
 
 Route::get('/', ['as' => 'page.index', 'uses' => 'FrontPagesController@index']);
+
+Route::get('cart', ['as' => 'page.cart', 'uses' => 'FrontPagesController@cart']);
+
 Route::post('search', ['as' => 'page.search', 'uses' => 'FrontPagesController@search']);
 
-Route::post('addToCart/{productId}', ['as' => 'add-to-cart', 'uses' => 'FrontPagesController@addToCart']);
+Route::post('addToCart/{productId}/{productQuantity?}', ['as' => 'add-to-cart', 'uses' => 'FrontPagesController@addToCart']);
+
+Route::match(['put', 'patch'], 'postOrder', ['as' => 'post-order', 'uses' => 'FrontPagesController@postOrder']);
 
 Auth::routes(['verify' => true]);
 
@@ -57,6 +62,7 @@ Route::group(['namespace' => 'User', 'middleware' => ['auth', 'isUser'], 'as' =>
 	Route::get('home', ['as' => 'home.index', 'uses' => 'HomeController@index']);
 	Route::get('home/edit', ['as' => 'home.edit', 'uses' => 'HomeController@edit']);
 	Route::match(['put', 'patch'], 'home/store', ['as' => 'home.update', 'uses' => 'HomeController@update']);
+	Route::delete('home/destroy', ['as' => 'home.destroy', 'uses' => 'HomeController@destroy']);
 
 });
 
@@ -69,3 +75,5 @@ Route::group(['namespace' => 'User', 'middleware' => ['auth', 'isUser'], 'as' =>
 //add seo options in admin panel
 //change error pages in views
 //orders in user panel will be on the home page
+//style cart page and remove button to each item
+//make order method field names problem

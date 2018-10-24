@@ -39,6 +39,11 @@
                                         <span class="text-danger">{{ $errors->first('email') }}</span>
                                     </div>
                                     <div class="form-group">
+                                        {!! Form::label('phone', 'Телефон:', ['class' => 'text-uppercase font-weight-bold']) !!}
+                                        {!! Form::number('phone', old('phone') ? old('phone') :$admin->phone, ['placeholder'=>'Телефон'] + ($errors->has('phone') ? ['class'=>'form-control is-invalid'] : ['class'=>'form-control'])) !!}
+                                        <span class="text-danger">{{ $errors->first('phone') }}</span>
+                                    </div>
+                                    <div class="form-group">
                                         {!! Form::label('current_password', 'Пароль:', ['class' => 'text-uppercase font-weight-bold']) !!}
                                         {!! Form::password('current_password', ['placeholder'=>'Пароль'] + ($errors->has('current_password') ? ['class'=>'form-control is-invalid'] : ['class'=>'form-control'])) !!}
                                         <span class="text-danger">{{ $errors->first('current_password') }}</span>

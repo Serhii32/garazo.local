@@ -28,6 +28,7 @@ class HomeController extends Controller
     {
         $admin =  Auth::user();
         $admin->name = $request->name;
+        $admin->phone = $request->phone;
         if ($admin->email != $request->email) {
             $admin->email_verified_at = null;
         }
