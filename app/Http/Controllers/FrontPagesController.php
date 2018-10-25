@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\ProductsCategory;
 use App\Product;
 use Cart;
+use Illuminate\Support\Facades\Auth;
 
 class FrontPagesController extends Controller
 {
@@ -43,24 +44,43 @@ class FrontPagesController extends Controller
 
     public function addToCart(int $productId, int $productQuantity = 1)
     {
-    
         $product = Product::findOrFail($productId);
         Cart::add($productId, $product->title, $product->price, $productQuantity);
-
-        // Cart::add(array(
-        //     'id' => 456,
-        //     'name' => 'Sample Item',
-        //     'price' => 67.99,
-        //     'quantity' => 4,
-        //     'attributes' => array()
-        // ));
-        
-
         return back();
     }
 
-    public function postOrder()
+    public function order(Request $request = null)
     {
-        
+        if($request)
+        {
+            foreach ($request->all() as $key => $value) {
+                if (strpos($key, 'itemQuantity') !== false) {
+                    preg_match('/\d+$/', $key, $matches);
+                    Cart::update($matches[0], array(
+                        'quantity' => array(
+                            'relative' => false,
+                            'value' => $value
+                        ),
+                    ));
+                }
+            }
+        }
+        $pageTitle = 'Оформить заказ';
+        $orderedProducts = Cart::getContent();
+        $totalPrice = Cart::getSubTotal();
+        $user = Auth::user();
+        return view('order', ['productsCategories' => $this->productsCategories], compact(['pageTitle', 'orderedProducts', 'totalPrice', 'user']));
     }
+
+    public function makeOrder(Request $request)
+    {
+        if(Auth::check()){
+            $user = Auth::user();
+        } else {
+
+        }
+        $orderedProducts = Cart::getContent();
+        dd($request->all());
+    }
+
 }

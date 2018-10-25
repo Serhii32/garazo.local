@@ -23,7 +23,9 @@ Route::post('search', ['as' => 'page.search', 'uses' => 'FrontPagesController@se
 
 Route::post('addToCart/{productId}/{productQuantity?}', ['as' => 'add-to-cart', 'uses' => 'FrontPagesController@addToCart']);
 
-Route::match(['put', 'patch'], 'postOrder', ['as' => 'post-order', 'uses' => 'FrontPagesController@postOrder']);
+Route::match(['get', 'put', 'patch'], 'order', ['as' => 'page.order', 'uses' => 'FrontPagesController@order']);
+
+Route::post('makeOrder', ['as' => 'make-order', 'uses' => 'FrontPagesController@makeOrder']);
 
 Auth::routes(['verify' => true]);
 
@@ -76,4 +78,3 @@ Route::group(['namespace' => 'User', 'middleware' => ['auth', 'isUser'], 'as' =>
 //change error pages in views
 //orders in user panel will be on the home page
 //style cart page and remove button to each item
-//make order method field names problem

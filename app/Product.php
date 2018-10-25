@@ -24,4 +24,9 @@ class Product extends Model
     {
     	return $this->belongsToMany('App\ProductsAttributesValue', 'product_products_attributes_value', 'product_id', 'products_attributes_value_id')->withTimestamps();
     }
+
+    public function orders()
+    {
+        return $this->belongsToMany('App\Order', 'order_product', 'product_id', 'order_id', 'price', 'quantity')->withTimestamps();
+    }
 }

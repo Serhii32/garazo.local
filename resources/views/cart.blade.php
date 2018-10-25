@@ -25,28 +25,25 @@
 								document.getElementById('allgemeine').innerHTML = itemsResult.toFixed(2);
 							}
 						</script>
-						{!! Form::open(['route'=> 'post-order', 'autocomplete' => 'off', 'method' => 'put']) !!}
+						{!! Form::open(['route'=> 'page.order', 'autocomplete' => 'off', 'method' => 'put']) !!}
 							@foreach($orderedProducts as $orderedProduct)
-								<div class="row m-3">
-									<div class="col-md-2">
-										<img class="img-fluid img-thumbnail" src="{{$orderedProduct->main_photo ? asset($orderedProduct->main_photo) : asset('img/common/default.png')}}" alt="{{ $orderedProduct->name }}">
+								<div class="row m-3 border-bottom p-1">
+									<div class="col-md-2 pb-2 text-center">
+										<img class="img-fluid img-thumbnail" style="max-height: 100px;" src="{{$orderedProduct->main_photo ? asset($orderedProduct->main_photo) : asset('img/common/default.png')}}" alt="{{ $orderedProduct->name }}">
 									</div>
-									<div class="col-md-3">
+									<div class="col-md-3 text-dark font-weight-bold text-uppercase pb-2">
 										<p>Название:</p>
 										{{$orderedProduct->name}}
 									</div>
-									<div class="col-md-2">
+									<div class="col-md-2 text-dark font-weight-bold text-uppercase pb-2">
 										<p>Цена:</p>
 										{{$orderedProduct->price}}
 									</div>
-									<div class="col-md-2">
+									<div class="col-md-2 text-dark font-weight-bold text-uppercase pb-2">
 										<p>Количество:</p>
 										{!! Form::number('itemQuantity'.$orderedProduct->id, old('itemQuantity'.$orderedProduct->id) ? old('itemQuantity'.$orderedProduct->id) :$orderedProduct->quantity, ['id'=>"itemQuantity$orderedProduct->id", 'placeholder'=>'Количество', 'min'=>'1', 'oninput'=>"countItemResult($orderedProduct->id, $orderedProduct->price, Math.abs(this.value));allgemeine();"] + ($errors->has('itemQuantity'.$orderedProduct->id) ? ['class'=>'form-control is-invalid'] : ['class'=>'form-control'])) !!}
-										{!! Form::hidden('itemId', $orderedProduct->id)!!}
- 										{{-- <input type="hidden" id="itemId" name="itemId" value="{{$orderedProduct->id}}"> --}}
-										{{-- <input id="itemQuantity{{$orderedProduct->id}}" type="number" oninput="countItemResult({{$orderedProduct->id}}, {{$orderedProduct->price}}, Math.abs(this.value));allgemeine();" name="itemQuantity{{$orderedProduct->id}}" class="form-control" min="1" value="{{$orderedProduct->quantity}}"> --}}
 									</div>
-									<div class="col-md-3">
+									<div class="col-md-3 text-dark font-weight-bold text-uppercase pb-2">
 										<p>Всего:</p>
 										<p class="itemResult" id="itemResult{{$orderedProduct->id}}"></p>
 									</div>
@@ -55,12 +52,30 @@
 									countItemResult({{$orderedProduct->id}}, {{$orderedProduct->price}}, {{$orderedProduct->quantity}});
 								</script>
 							@endforeach
-							<div class="m-3">
+							<div class="m-3 text-dark font-weight-bold text-uppercase">
 								<h3 class="text-right">Всего: <span id="allgemeine"></span></h3>
 							</div>
-							Заказать быстро
+							@auth
+								<div class="text-center">
+									{!! Form::submit('Заказать', ['class'=>'btn btn-success w-75 text-uppercase font-weight-bold']) !!}								
+								</div>
+							@endauth
+							@guest
+								<div class="text-center">
+									{!! Form::submit('Заказать быстро', ['class'=>'btn btn-success w-75 text-uppercase font-weight-bold']) !!}								
+								</div>
+							@endguest
 						{!! Form::close() !!}
-						Зарегистрироваться Войти 
+						@guest
+							<div class="row my-2">
+								<div class="col-md-6 text-right mb-2">
+									<a href="{{route('register')}}" class="btn btn-primary text-light font-weight-bold text-uppercase w-100">Зарегистрироваться</a>
+								</div>
+								<div class="col-md-6 text-left mb-2">
+									<a href="{{route('login')}}" class="btn btn-primary text-light font-weight-bold text-uppercase w-100">Войти</a>
+								</div>
+							</div>
+						@endguest
 						<script>
 							allgemeine();
 						</script>
