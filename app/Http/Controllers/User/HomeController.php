@@ -51,6 +51,11 @@ class HomeController extends Controller
     public function destroy()
     {
         $user =  Auth::user();
+        $orders = $user->orders()->get();
+        foreach ($orders as $order) {
+            $order->user_id = null;
+            $order->save();
+        }
         Auth::logout();
         Storage::disk('uploaded_img')->deleteDirectory('img/common/avatars/users/' . $user->id);
         $user->delete();

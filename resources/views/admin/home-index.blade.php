@@ -103,7 +103,7 @@
                         </div>
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3 my-3">
                             <div class="card h-100 shadow">
-                                <a class="card-link text-secondary p-1" href="#">
+                                <a class="card-link text-secondary p-1" href="{{route('admin.uploaded-images.index')}}">
                                     <h1 class="display-1 text-center"><i class="fas fa-images"></i></h1>
                                     <h4 class="text-center text-uppercase">Загруженные изображения</h4>
                                 </a>

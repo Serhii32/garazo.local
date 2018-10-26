@@ -13,20 +13,22 @@ class CKEditorImageUploadController extends Controller
 {
     public function index()
     {
-    	$entries = collect(Storage::allFiles('img/common/uploaded-images'));
+    	$entries = collect(Storage::disk('uploaded_img')->allFiles('img/common/uploaded-images'));
     	$currentPage = LengthAwarePaginator::resolveCurrentPage();
         $perPage = 8;
         $currentPageSearchResults = $entries->slice(($currentPage - 1) * $perPage, $perPage)->all();
         $images = new LengthAwarePaginator($currentPageSearchResults, count($entries), $perPage);
         $images->setPath(route('admin.uploaded-images.index')); 
-    	return view('admin.uploaded_images.index', compact('images'));
+    	return view('admin.uploaded-images.index', compact('images'));
     }
+
     public function destroy(string $image)
     {
     	$decryptedImage = Crypt::decrypt($image);
         Storage::disk('uploaded_img')->delete($decryptedImage);
-        return redirect()->route('admin/uploaded-images.index')->with(['message' => 'Изображение успешно удалено']);
+        return redirect()->route('admin.uploaded-images.index')->with(['message' => 'Изображение успешно удалено']);
     }
+
     public function uploadImage(Request $request, Factory $validator)
     {
     	preg_match("#/admin/(.*?)/#", $request->header()['referer'][0], $match); 

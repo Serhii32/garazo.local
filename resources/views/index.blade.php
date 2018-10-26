@@ -14,20 +14,20 @@
 
 							<div class="customSlides customSlidesFade">
 							  	<div class="numbertext">1 / 3</div>
-							  	<img src="https://www.w3schools.com/howto/img_nature_wide.jpg">
-							  	<div class="customSlidesText">Caption Text</div>
+							  	<img src="{{asset('img/index-page-slider/1.png')}}" alt="Все для автомоек">
+							  	<div class="customSlidesText"></div>
 							</div>
 
 							<div class="customSlides customSlidesFade">
 							  	<div class="numbertext">2 / 3</div>
-							  	<img src="https://www.w3schools.com/howto/img_snow_wide.jpg">
-							  	<div class="customSlidesText">Caption Two</div>
+							  	<img src="{{asset('img/index-page-slider/2.png')}}" alt="Откройте свою автомойку самообслуживания уже сейчас!">
+							  	<div class="customSlidesText"></div>
 							</div>
 
 							<div class="customSlides customSlidesFade">
 							  	<div class="numbertext">3 / 3</div>
-							  	<img src="https://www.w3schools.com/howto/img_mountains_wide.jpg">
-							  	<div class="customSlidesText">Caption Three</div>
+							  	<img src="{{asset('img/index-page-slider/3.png')}}" alt="Чистка авто профессиональной химией изменит его до неузнаваемости">
+							  	<div class="customSlidesText"></div>
 							</div>
 
 							<a class="customSlidesPrev" onclick="plusSlides(-1)">&#10094;</a>
@@ -57,7 +57,7 @@
 	                                    		</div>
 	                                    		<div class="col-12 col-sm-6">
 	                                    			<a class="card-link text-secondary p-1" href="#">
-			                                            <h4 class="text-center text-uppercase">{{$productsCategory->title}}</h4>
+			                                            <h5 class="text-center text-uppercase">{{$productsCategory->title}}</h5>
 			                                        </a>
 			                                        <p class="text-center text-secondary p-1">
 			                                        	{{$productsCategory->short_description}}

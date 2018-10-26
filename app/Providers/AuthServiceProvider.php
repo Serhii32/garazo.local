@@ -18,6 +18,9 @@ class AuthServiceProvider extends ServiceProvider
         'App\Product' => 'App\Policies\AdminPolicy',
         'App\RecordsCategory' => 'App\Policies\AdminPolicy',
         'App\ProductsCategory' => 'App\Policies\AdminPolicy',
+        'App\Order' => 'App\Policies\AdminPolicy',
+        'App\ProductsAttributesName' => 'App\Policies\AdminPolicy',
+        'App\ProductsAttributesValue' => 'App\Policies\AdminPolicy',
     ];
 
     /**

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\ProductsCategory;
 use App\Product;
 use Cart;
+use App\Order;
 use Illuminate\Support\Facades\Auth;
 
 class FrontPagesController extends Controller
@@ -74,13 +75,32 @@ class FrontPagesController extends Controller
 
     public function makeOrder(Request $request)
     {
+        $order = new Order();
+        $order->name = $request->name;
+        $order->email = $request->email;
+        $order->phone = $request->phone;
+        $order->status = 1;
+        $order->delivery = $request->delivery;
+        $order->payment = $request->payment;
+        $order->totalSum = Cart::getSubTotal();
         if(Auth::check()){
             $user = Auth::user();
-        } else {
-
+            $order->user_id = $user->id;
+            if (!$user->phone) {
+                $user->phone = $request->phone;
+                $user->save();
+            }
         }
+        $order->save();
         $orderedProducts = Cart::getContent();
-        dd($request->all());
+        foreach ($orderedProducts as $orderedProduct) {
+            $order->products()->attach($orderedProduct->id, ['order_id' => $order->id, 'price' => $orderedProduct->price, 'quantity' => $orderedProduct->quantity]);
+            $product = Product::findOrFail($orderedProduct->id);
+            $product->most_saled += $orderedProduct->quantity;
+            $product->save();
+        }
+        Cart::clear();
+        return redirect()->route('page.index');
     }
 
 }

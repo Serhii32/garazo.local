@@ -37,7 +37,7 @@
                 <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="#">SEO теги страниц</a>
             </li>
             <li class="list-group-item list-group-item-action p-0">
-                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="#">Загруженные изображения</a>
+                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="{{route('admin.uploaded-images.index')}}">Загруженные изображения</a>
             </li>
         </ul>
     </div>

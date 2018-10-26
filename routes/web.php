@@ -55,6 +55,10 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'isAdmin'], 'as' 
 
 		Route::resource('products', 'ProductsController')->except(['show']);
 
+		Route::resource('orders', 'OrdersController')->except(['show']);
+
+		Route::resource('attributes', 'AttributesController')->except(['show']);
+
 	});
 
 });
@@ -73,8 +77,9 @@ Route::group(['namespace' => 'User', 'middleware' => ['auth', 'isUser'], 'as' =>
 //admin email, where orders sending
 //admin and user page with nofollow noindex tag
 //admin can delete users with message to email
-//most saled every order of the product will increase by one
 //add seo options in admin panel
 //change error pages in views
 //orders in user panel will be on the home page
 //style cart page and remove button to each item
+//add request for order
+//add attributes and orders policies

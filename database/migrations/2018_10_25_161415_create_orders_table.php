@@ -17,9 +17,10 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->nullable()->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedTinyInteger('status');
             $table->string('name');
-            $table->string('email')->unique();
-            $table->integer('phone')->nullable();
+            $table->string('email');
+            $table->integer('phone');
             $table->unsignedTinyInteger('delivery');
             $table->unsignedTinyInteger('payment');
             $table->decimal('totalSum', 10, 2);
