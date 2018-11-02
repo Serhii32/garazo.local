@@ -28,24 +28,27 @@
 						{!! Form::open(['route'=> 'page.order', 'autocomplete' => 'off', 'method' => 'put']) !!}
 							@foreach($orderedProducts as $orderedProduct)
 								<div class="row m-3 border-bottom p-1">
-									<div class="col-md-2 pb-2 text-center">
+									<div class="col-12 col-md-2 pb-2 text-center">
 										<img class="img-fluid img-thumbnail" style="max-height: 100px;" src="{{$orderedProduct->main_photo ? asset($orderedProduct->main_photo) : asset('img/common/default.png')}}" alt="{{ $orderedProduct->name }}">
 									</div>
-									<div class="col-md-3 text-dark font-weight-bold text-uppercase pb-2">
+									<div class="col-6 col-md-3 text-dark font-weight-bold text-uppercase pb-2">
 										<p>Название:</p>
 										{{$orderedProduct->name}}
 									</div>
-									<div class="col-md-2 text-dark font-weight-bold text-uppercase pb-2">
+									<div class="col-6 col-md-2 text-dark font-weight-bold text-uppercase pb-2">
 										<p>Цена:</p>
 										{{$orderedProduct->price}}
 									</div>
-									<div class="col-md-2 text-dark font-weight-bold text-uppercase pb-2">
+									<div class="col-6 col-md-2 text-dark font-weight-bold text-uppercase pb-2">
 										<p>Количество:</p>
 										{!! Form::number('itemQuantity'.$orderedProduct->id, old('itemQuantity'.$orderedProduct->id) ? old('itemQuantity'.$orderedProduct->id) :$orderedProduct->quantity, ['id'=>"itemQuantity$orderedProduct->id", 'placeholder'=>'Количество', 'min'=>'1', 'oninput'=>"countItemResult($orderedProduct->id, $orderedProduct->price, Math.abs(this.value));allgemeine();"] + ($errors->has('itemQuantity'.$orderedProduct->id) ? ['class'=>'form-control is-invalid'] : ['class'=>'form-control'])) !!}
 									</div>
-									<div class="col-md-3 text-dark font-weight-bold text-uppercase pb-2">
+									<div class="col-6 col-md-2 text-dark font-weight-bold text-uppercase pb-2">
 										<p>Всего:</p>
 										<p class="itemResult" id="itemResult{{$orderedProduct->id}}"></p>
+									</div>
+									<div class="m-auto col-md-1 text-dark font-weight-bold text-uppercase pb-2 text-center">
+										<a href="{{route('delete-from-cart', $orderedProduct->id)}}"><i class="fas fa-times-circle text-dark" style="font-size: 20px;"></i></a>
 									</div>
 								</div>
 								<script>

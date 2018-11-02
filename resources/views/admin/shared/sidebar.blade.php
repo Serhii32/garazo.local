@@ -13,7 +13,7 @@
                 <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="{{route('admin.products.create')}}">Добавить товар</a>
             </li>
             <li class="list-group-item list-group-item-action p-0">
-                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="#">Характеристики товаров</a>
+                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="{{route('admin.attributes.index')}}">Характеристики товаров</a>
             </li>
             <li class="list-group-item list-group-item-action p-0">
                 <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="{{route('admin.productsCategories.index')}}">Категории товаров</a>
@@ -28,10 +28,10 @@
                 <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="{{route('admin.recordsCategories.index')}}">Категории новостей</a>
             </li>
             <li class="list-group-item list-group-item-action p-0">
-                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="#">Список заказов</a>
+                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="{{route('admin.orders.index')}}">Список заказов</a>
             </li>
             <li class="list-group-item list-group-item-action p-0">
-                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="#">Список клиентов</a>
+                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="{{route('admin.users.index')}}">Список клиентов</a>
             </li>
             <li class="list-group-item list-group-item-action p-0">
                 <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="#">SEO теги страниц</a>

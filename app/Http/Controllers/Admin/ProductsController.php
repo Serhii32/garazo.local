@@ -10,6 +10,7 @@ use App\ProductsAttributesName;
 use App\ProductsAttributesValue;
 use App\Http\Requests\StoreProductRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class ProductsController extends Controller
 {
@@ -226,9 +227,13 @@ class ProductsController extends Controller
     {
         $this->authorize('manage', \App\Product::class);
     	$product = Product::findOrFail($productId);
-    	$product->attributesNames()->detach($attributeNameId);
+        $idInPivotTable = $product->attributesNames()->get()->where('id', $attributeNameId)->first()->pivot->get()->where('product_id', $productId)->where('products_attributes_name_id', $attributeNameId)->first()->id;
         $product->attributesValues()->detach($attributeValueId);
-
+        if(count($product->attributesNames()->get()->where('id', $attributeNameId)) < 2) {
+            $product->attributesNames()->detach($attributeNameId);
+        } else {
+            DB::table('product_products_attributes_name')->where('id', $idInPivotTable)->delete();
+        }
         return redirect()->back()->with(['message' => 'Характеристика успешно удалена']);
     }
 }

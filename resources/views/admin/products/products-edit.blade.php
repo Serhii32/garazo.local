@@ -82,15 +82,23 @@
                             <div id="productAttributes">
 
                                 @if(!empty(old('attributes_names')) || !empty($product->attributesNames()->get()))
-                                    @php $i = 0; @endphp
+                                    {{-- {{dd($product->attributesNames()->get()[0]->pivot->get())}} --}}
                                     @if(!empty($product->attributesNames()->get()))
-                                        @for($i; $i < count($product->attributesNames()->get()); $i++)
+                                        @php $i = 0; $k = 0; $previous = ''; $attributesNamesOrderedArray = $product->attributesNames()->orderBy('name')->get(); @endphp
+                                        @for($i; $i < count($attributesNamesOrderedArray); $i++)
                                             <div class="existed-attributes form-group py-4 border-bottom" id="attribute{{$i+1}}">
                                                 <div class="row">
                                                     <p class="text-uppercase font-weight-bold col-12 col-sm-6">Характеристика {{$i+1}}</p>
+
+                                                    @if($previous == $attributesNamesOrderedArray[$i]->name)
+                                                        @php $k++; @endphp
+                                                    @else
+                                                        @php $k=0; @endphp
+                                                    @endif
+                                                    @php $previous = $attributesNamesOrderedArray[$i]->name @endphp
                                                    
                                                     <div class="col-12 col-sm-6">
-                                                        <a class="float-right btn btn-danger text-uppercase font-weight-bold" onclick="return confirm('Подтвердить удаление?')" href="{{route('admin.products.productAttributeDestroy', [$product->id, $product->attributesNames()->get()[$i]->id, $product->attributesNames()->get()[$i]->values()->whereHas('products', function($query)use($product){$query->where('product_id', '=', $product->id);})->first()->id])}}">Удалить</a>
+                                                        <a class="float-right btn btn-danger text-uppercase font-weight-bold" onclick="return confirm('Подтвердить удаление?')" href="{{route('admin.products.productAttributeDestroy', [$product->id, $attributesNamesOrderedArray[$i]->id, $attributesNamesOrderedArray[$i]->values()->whereHas('products', function($query)use($product){$query->where('product_id', '=', $product->id);})->get()[$k]->id])}}">Удалить</a>
                                                     </div>
 
                                                 </div>
@@ -101,7 +109,7 @@
                                                         @if($errors->has('attributes_names.'.$i)) class="form-control autocomplete-list-target-name is-invalid" 
                                                         @else class="form-control autocomplete-list-target-name"
                                                         @endif 
-                                                        value="{{$product->attributesNames()->get()[$i]->name}}">
+                                                        value="{{$attributesNamesOrderedArray[$i]->name}}">
                                                         <span class="text-danger">{{ $errors->first('attributes_names.'.$i) }}</span>
                                                     </div>
                                                     <div class="col-12 col-sm-6 py-2">
@@ -110,11 +118,11 @@
                                                         @if($errors->has('attributes_values.'.$i)) class="form-control autocomplete-list-target-value is-invalid"
                                                         @else class="form-control autocomplete-list-target-value"
                                                         @endif
-                                                        value="{{$product->attributesNames()->get()[$i]->values()->whereHas('products', function($query)use($product){$query->where('product_id', '=', $product->id);})->first()->value}}">
+                                                        value="{{$attributesNamesOrderedArray[$i]->values()->whereHas('products', function($query)use($product){$query->where('product_id', '=', $product->id);})->get()[$k]->value}}">
                                                         <span class="text-danger">{{ $errors->first('attributes_values.'.$i) }}</span>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>                                            
                                         @endfor
                                     @endif
                                     @if(!empty(old('attributes_names')))

@@ -8,13 +8,16 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Order;
 
 class HomeController extends Controller
 {
     public function index()
     {
+        $user = Auth::user();
+        $orders = Order::orderBy('status')->where('user_id', $user->id)->paginate(12);
         $pageTitle = 'Страница пользователя';
-        return view('user.home-index', compact(['pageTitle']));
+        return view('user.home-index', compact(['pageTitle', 'orders']));
     }
 
     public function edit()
@@ -60,5 +63,13 @@ class HomeController extends Controller
         Storage::disk('uploaded_img')->deleteDirectory('img/common/avatars/users/' . $user->id);
         $user->delete();
         return redirect('/');
+    }
+
+    public function destroyOrder(int $id)
+    {
+        $order = Order::findOrFail($id);
+        $order->products()->detach();
+        $order->delete();
+        return back()->with(['message' => 'Заказ успешно удален']);
     }
 }

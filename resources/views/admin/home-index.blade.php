@@ -39,7 +39,7 @@
                         </div>
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3 my-3">
                             <div class="card h-100 shadow">
-                                <a class="card-link text-secondary p-1" href="#">
+                                <a class="card-link text-secondary p-1" href="{{route('admin.attributes.index')}}">
                                     <h1 class="display-1 text-center"><i class="fas fa-sort-amount-up"></i></h1>
                                     <h4 class="text-center text-uppercase">Характеристики товаров</h4>
                                 </a>
@@ -79,7 +79,7 @@
                         </div>
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3 my-3">
                             <div class="card h-100 shadow">
-                                <a class="card-link text-secondary p-1" href="#">
+                                <a class="card-link text-secondary p-1" href="{{route('admin.orders.index')}}">
                                     <h1 class="display-1 text-center"><i class="fas fa-shipping-fast"></i></h1>
                                     <h4 class="text-center text-uppercase">Список заказов</h4>
                                 </a>
@@ -87,7 +87,7 @@
                         </div>
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3 my-3">
                             <div class="card h-100 shadow">
-                                <a class="card-link text-secondary p-1" href="#">
+                                <a class="card-link text-secondary p-1" href="{{route('admin.users.index')}}">
                                     <h1 class="display-1 text-center"><i class="fas fa-users"></i></h1>
                                     <h4 class="text-center text-uppercase">Список клиентов</h4>
                                 </a>

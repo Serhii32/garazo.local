@@ -4,82 +4,55 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\ProductsAttributesName;
+use App\ProductsAttributesValue;
+use App\Http\Requests\StoreAttributeNameRequest;
 
 class AttributesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $attributesNames = ProductsAttributesName::all();
+        $pageTitle = 'Характеристики товаров';
+        return view('admin.attributes.attributes-index', compact(['attributesNames', 'pageTitle']));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(int $id)
     {
-        //
+        $attributesName = ProductsAttributesName::findOrFail($id);
+        $pageTitle = $attributesName->name;
+        return view('admin.attributes.attributes-edit', compact(['attributesName', 'pageTitle']));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(StoreAttributeNameRequest $request, int $id)
     {
-        //
+        $attributesName = ProductsAttributesName::findOrFail($id);
+        $attributesName->name = $request->name;
+        $attributesName->save();
+        return redirect()->route('admin.attributes.index')->with(['message' => 'Характеристика успешно обновлена']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        //
+        $attributesName = ProductsAttributesName::findOrFail($id);
+        $attributesName->values()->detach();
+        $attributesName->products()->detach();
+        $attributesName->delete();
+        return redirect()->route('admin.attributes.index')->with(['message' => 'Характеристика успешно удалена']);
     }
 }

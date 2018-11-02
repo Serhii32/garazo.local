@@ -51,12 +51,12 @@
 	                                    <div class="card h-100 shadow p-2">
 	                                    	<div class="row">
 	                                    		<div class="col-12 col-sm-6">
-	                                    			<a class="card-link text-secondary p-1" href="#">
+	                                    			<a class="card-link text-secondary p-1" href="{{route('page.products-category', $productsCategory->id)}}">
 			                                            <div class="text-center"><img class="img-fluid img-thumbnail" src="{{$productsCategory->photo ? asset($productsCategory->photo) : asset('img/common/default.png')}}" alt="{{ $productsCategory->title }}"></div>
 			                                        </a>
 	                                    		</div>
 	                                    		<div class="col-12 col-sm-6">
-	                                    			<a class="card-link text-secondary p-1" href="#">
+	                                    			<a class="card-link text-secondary p-1" href="{{route('page.products-category', $productsCategory->id)}}">
 			                                            <h5 class="text-center text-uppercase">{{$productsCategory->title}}</h5>
 			                                        </a>
 			                                        <p class="text-center text-secondary p-1">
@@ -76,24 +76,24 @@
 						<div class="container">
 							<div class="row justify-content-center">
 	                            @foreach($products as $product)
-	                                <div class="col-12 col-sm-6 col-md-4 my-3">
+	                                <div class="col-12 col-sm-6 col-md-6 col-lg-4 my-3">
 	                                    <div class="card h-100 shadow p-2">
-	                                        <a class="card-link text-secondary p-1" href="#">
+	                                        <a class="card-link text-secondary p-1" href="{{route('page.product', $product->id)}}">
 	                                            <div class="text-center">
 	                                            	<img class="img-fluid img-thumbnail" src="{{$product->main_photo ? asset($product->main_photo) : asset('img/common/default.png')}}" alt="{{ $product->title }}">
 	                                            	@if($product->most_saled !== 0 && $product->most_saled >= $most_saled_last)
-	                                            		<span style="position: absolute; top: 0px; right: 0px; z-index: 1; width: 131px; height: 39px; background: url(https://uaprom-uc.prom.st/production/design_template/849/images/ribbon.png) 0 -105px no-repeat; color: #fff; text-align: center; font-size: 13px; line-height: 37px;">Топ продаж</span>
+	                                            		<span style="position: absolute; top: 0px; right: 0px; z-index: 1; width: 131px; height: 39px; background: url({{asset('img/common/ribbon.png')}}) 0 -105px no-repeat; color: #fff; text-align: center; font-size: 13px; line-height: 37px;">Топ продаж</span>
 	                                            	@endif
 	                                            	@if($product->novelty)
-	                                            		<span style="position: absolute; top: 40px; right: 0px; z-index: 1; width: 131px; height: 39px; background: url(https://uaprom-uc.prom.st/production/design_template/849/images/ribbon.png) 0 -165px no-repeat; color: #fff; text-align: center; font-size: 13px; line-height: 37px;">Новинка</span>
+	                                            		<span style="position: absolute; top: 40px; right: 0px; z-index: 1; width: 131px; height: 39px; background: url({{asset('img/common/ribbon.png')}}) 0 -165px no-repeat; color: #fff; text-align: center; font-size: 13px; line-height: 37px;">Новинка</span>
 	                                            	@endif
 	                                            	@if($product->promo_action)
-	                                            		<span style="position: absolute; top: 80px; right: 0px; z-index: 1; width: 131px; height: 39px; background: url(https://uaprom-uc.prom.st/production/design_template/849/images/ribbon.png) 0 -222px no-repeat; color: #fff; text-align: center; font-size: 13px; line-height: 37px;">Акция</span>
+	                                            		<span style="position: absolute; top: 80px; right: 0px; z-index: 1; width: 131px; height: 39px; background: url({{asset('img/common/ribbon.png')}}) 0 -222px no-repeat; color: #fff; text-align: center; font-size: 13px; line-height: 37px;">Акция</span>
 	                                            	@endif
 	                                            </div>
-	                                            <h4 class="text-center text-uppercase">{{$product->title}}</h4>
+	                                            <h5 class="text-center text-uppercase">{{$product->title}}</h5>
 	                                        </a>
-	                                        <h5 class="text-center text-uppercase text-secondary">Цена: {{$product->price}}</h5>
+	                                        <h6 class="text-center text-uppercase text-secondary">Цена: {{$product->price}} грн.</h6>
 
 	                                        {!! Form::open(['route'=> ['add-to-cart', $product->id], 'class'=>'mb-0 mt-auto mx-auto w-100 p-0']) !!}
 	                                            {!! Form::submit('Купить', ['class'=>'btn btn-warning mb-0 mt-auto mx-auto w-100 text-uppercase font-weight-bold']) !!}

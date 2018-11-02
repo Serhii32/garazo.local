@@ -26,28 +26,38 @@
 				  	<div class="collapse navbar-collapse" id="navbarSupportedContent2">
 					    <ul class="navbar-nav m-auto">
 					      	<li class="nav-item active">
-					        	<a class="nav-link font-weight-bold text-uppercase" href="#">Главная</a>
+					        	<a class="nav-link font-weight-bold text-uppercase" href="{{route('page.index')}}">Главная</a>
 					      	</li>
 					      	<li class="nav-item">
-					        	<a class="nav-link font-weight-bold text-uppercase" href="#">Товары и услуги</a>
+					        	<a class="nav-link font-weight-bold text-uppercase" href="{{route('page.products-services')}}">Товары и услуги</a>
 					      	</li>
 					      	<li class="nav-item">
-					        	<a class="nav-link font-weight-bold text-uppercase" href="#">О нас</a>
+					        	<a class="nav-link font-weight-bold text-uppercase" href="{{route('page.about')}}">О нас</a>
 					      	</li>
 					      	<li class="nav-item">
 					        	<a class="nav-link font-weight-bold text-uppercase" href="#">Контакты</a>
 					      	</li>
 					      	<li class="nav-item">
-					        	<a class="nav-link font-weight-bold text-uppercase" href="#">Доставка и оплата</a>
+					        	<a class="nav-link font-weight-bold text-uppercase" href="{{route('page.delivery-payment')}}">Доставка и оплата</a>
 					      	</li>
-					      	<li class="nav-item">
-					        	<a class="nav-link font-weight-bold text-uppercase" href="#">Новости</a>
+					      	<li class="nav-item dropdown">
+					        	<a class="nav-link font-weight-bold text-uppercase d-inline-block pr-0" href="{{route('page.records')}}">Новости</a>
+								@if(count($recordsCategories))
+						        	<a class="nav-link dropdown-toggle font-weight-bold text-uppercase d-inline-block pl-0" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"></a>
+						        	<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						        		@foreach($recordsCategories as $recordsCategory)
+									        <a class="dropdown-item font-weight-bold text-uppercase border-bottom" href="{{route('page.records-category', $recordsCategory->id)}}">{{$recordsCategory->title}}</a>
+								        @endforeach
+							        </div>
+						        @endif
 					      	</li>
+
 					      	<li class="nav-item">
-					        	<a class="nav-link font-weight-bold text-uppercase" href="#">Акции</a>
+					        	<a class="nav-link font-weight-bold text-uppercase" href="{{route('page.promo-action')}}">Акции</a>
 					      	</li>
 					    </ul>
 				  	</div>
+				  	<a class="card-link font-weight-bold text-uppercase text-dark" style="font-size: 25px;" href="{{route('page.cart')}}"><i class="fas fa-shopping-cart"></i> {{Cart::getContent()->count()?:''}}</a>
 				</nav>
 	    	</div>
 	    </div>
