@@ -57,7 +57,7 @@
 	                                    		</div>
 	                                    		<div class="col-12 col-sm-6">
 	                                    			<a class="card-link text-secondary p-1" href="{{route('page.products-category', $productsCategory->id)}}">
-			                                            <h5 class="text-center text-uppercase">{{$productsCategory->title}}</h5>
+			                                            <h5 class="text-center">{{$productsCategory->title}}</h5>
 			                                        </a>
 			                                        <p class="text-center text-secondary p-1">
 			                                        	{{$productsCategory->short_description}}
@@ -91,9 +91,9 @@
 	                                            		<span style="position: absolute; top: 80px; right: 0px; z-index: 1; width: 131px; height: 39px; background: url({{asset('img/common/ribbon.png')}}) 0 -222px no-repeat; color: #fff; text-align: center; font-size: 13px; line-height: 37px;">Акция</span>
 	                                            	@endif
 	                                            </div>
-	                                            <h5 class="text-center text-uppercase">{{$product->title}}</h5>
+	                                            <h5 class="text-center">{{$product->title}}</h5>
 	                                        </a>
-	                                        <h6 class="text-center text-uppercase text-secondary">Цена: {{$product->price}} грн.</h6>
+	                                        <h6 class="text-center text-secondary">Цена: {{$product->price}} грн.</h6>
 
 	                                        {!! Form::open(['route'=> ['add-to-cart', $product->id], 'class'=>'mb-0 mt-auto mx-auto w-100 p-0']) !!}
 	                                            {!! Form::submit('Купить', ['class'=>'btn btn-warning mb-0 mt-auto mx-auto w-100 text-uppercase font-weight-bold']) !!}

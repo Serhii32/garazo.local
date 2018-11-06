@@ -13,4 +13,19 @@ class SEOController extends Controller
     	$pages = SEO_Page::all();
     	return view('admin.pagesSEO.pagesSEO-index', compact(['pages']));
     }
+
+    public function update(Request $request)
+    {
+
+    	for($i = 1; $i <= (count($request->all())-2)/3; $i++){
+    		$page = SEO_Page::findOrFail($i);
+    		$page->titleSEO = $request->input('titleSEO_'.$i);
+    		$page->descriptionSEO = $request->input('descriptionSEO_'.$i);
+    		$page->keywordsSEO = $request->input('keywordsSEO_'.$i);
+    		$page->save();
+    	}
+
+    	return redirect()->route('admin.pagesSEO.index')->with(['message' => 'SEO страниц успешно обновлено']);
+    }
+
 }

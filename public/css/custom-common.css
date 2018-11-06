@@ -19,3 +19,6 @@ button {
 	max-width: 100%;
 	height: auto !important;
 }
+.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
+	color: rgb(122, 230, 193) !important;
+}

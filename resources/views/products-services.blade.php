@@ -6,8 +6,36 @@
 			<div class="row">
 				@include('shared.sidebar')
 				<div class="col-12 col-md-8 col-lg-9">
+					<h3 class="text-dark font-weight-bold text-uppercase text-center p-4">Товары и услуги</h3>
+					@if(isset($productsCategory) && count($productsCategory->childs()->get()))
+						<h3 class="text-dark font-weight-bold text-uppercase text-center p-4">Подкатегории</h3>
+						<div class="container">
+							<div class="row justify-content-center">
+	                            @foreach($productsCategory->childs()->get() as $subCategory)
+	                                <div class="col-12 col-sm-6 my-3">
+	                                    <div class="card h-100 shadow p-2">
+	                                    	<div class="row">
+	                                    		<div class="col-12 col-sm-6">
+	                                    			<a class="card-link text-secondary p-1" href="{{route('page.products-category', $subCategory->id)}}">
+			                                            <div class="text-center"><img class="img-fluid img-thumbnail" src="{{$subCategory->photo ? asset($subCategory->photo) : asset('img/common/default.png')}}" alt="{{ $subCategory->title }}"></div>
+			                                        </a>
+	                                    		</div>
+	                                    		<div class="col-12 col-sm-6">
+	                                    			<a class="card-link text-secondary p-1" href="{{route('page.products-category', $subCategory->id)}}">
+			                                            <h5 class="text-center">{{$subCategory->title}}</h5>
+			                                        </a>
+			                                        <p class="text-center text-secondary p-1">
+			                                        	{{$subCategory->short_description}}
+			                                        </p>
+	                                    		</div>
+	                                    	</div>
+	                                    </div>
+	                                </div>
+	                            @endforeach
+	                        </div>
+						</div>
+					@endif
 					@if(count($products))
-						<h3 class="text-dark font-weight-bold text-uppercase text-center p-4">{{$pageTitle}}</h3>
 						<div class="container">
 							<div class="row justify-content-center">
 	                            @foreach($products as $product)
@@ -26,9 +54,9 @@
 	                                            		<span style="position: absolute; top: 80px; right: 0px; z-index: 1; width: 131px; height: 39px; background: url({{asset('img/common/ribbon.png')}}) 0 -222px no-repeat; color: #fff; text-align: center; font-size: 13px; line-height: 37px;">Акция</span>
 	                                            	@endif
 	                                            </div>
-	                                            <h5 class="text-center text-uppercase">{{$product->title}}</h5>
+	                                            <h5 class="text-center">{{$product->title}}</h5>
 	                                        </a>
-	                                        <h6 class="text-center text-uppercase text-secondary">Цена: {{$product->price}} грн.</h6>
+	                                        <h6 class="text-center text-secondary">Цена: {{$product->price}} грн.</h6>
 
 	                                        {!! Form::open(['route'=> ['add-to-cart', $product->id], 'class'=>'mb-0 mt-auto mx-auto w-100 p-0']) !!}
 	                                            {!! Form::submit('Купить', ['class'=>'btn btn-warning mb-0 mt-auto mx-auto w-100 text-uppercase font-weight-bold']) !!}

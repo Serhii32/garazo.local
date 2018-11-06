@@ -6,7 +6,7 @@
 
         	@foreach($productsCategories as $productsCategory)
 				<li class="list-group-item p-2">
-	                <a class="card-link text-dark font-weight-bold text-uppercase" href="{{route('page.products-category', $productsCategory->id)}}">― {{$productsCategory->title}} </a>
+	                <a class="card-link text-dark font-weight-bold" href="{{route('page.products-category', $productsCategory->id)}}">{{$productsCategory->title}} </a>
 	                @if(count($productsCategory->childs))
 		                <a class="float-right" data-toggle="collapse" href="#c{{$productsCategory->id}}"><i data-toggle="collapse" class="fas fa-angle-down"></i></a>
 		                @include('shared.sidebar-subcategories', ['childs' => $productsCategory->childs, 'idNumber' => $productsCategory->id])

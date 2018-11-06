@@ -7,7 +7,7 @@
 				@include('shared.sidebar')
 				<div class="col-12 col-md-8 col-lg-9">
 					@if(count($records))
-						<h3 class="text-dark font-weight-bold text-uppercase text-center p-4">{{$pageTitle}}</h3>
+						<h3 class="text-dark font-weight-bold text-uppercase text-center p-4">Новости</h3>
 						<div class="container">
 							<div class="row justify-content-center">
 	                            @foreach($records as $record)

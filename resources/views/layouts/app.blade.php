@@ -36,10 +36,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="tel:+380000000000"><i class="fas fa-phone"></i> +(380)000-00-00-00</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="tel:+380000000000"><i class="fas fa-phone"></i> +(380)000-00-00-00</a>
+                            <a class="nav-link" href="tel:+3800674306918"><i class="fas fa-phone"></i> +(380)067-430-69-18</a>
                         </li>
                     </ul>
 

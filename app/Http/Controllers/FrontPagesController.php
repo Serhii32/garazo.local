@@ -10,6 +10,7 @@ use App\Record;
 use Cart;
 use App\Order;
 use Illuminate\Support\Facades\Auth;
+use App\SEO_Page;
 
 class FrontPagesController extends Controller
 {
@@ -23,27 +24,48 @@ class FrontPagesController extends Controller
 
     public function index()
     {
-    	$pageTitle = 'Главная';
+        $pageSEO = SEO_Page::where('page', '=', 'Главная')->first();
+    	$pageTitle = $pageSEO->titleSEO;
+        $pageDescription = $pageSEO->descriptionSEO;
+        $pageKeywords = $pageSEO->keywordsSEO;
         $products = Product::paginate(12);
         $most_saled_last;
+        $homeActive = true;
         if (count($products)) {
             $most_saled_last = $products->sortByDesc('most_saled')->take(5)->last()->most_saled;
         }
-    	return view('index', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'products', 'most_saled_last']));
+    	return view('index', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'pageDescription', 'pageKeywords', 'homeActive', 'products', 'most_saled_last']));
     }
 
     public function search(Request $request)
     {
-        $pageTitle = 'Результаты поиска';
+        $pageSEO = SEO_Page::where('page', '=', 'Поиск')->first();
+        $pageTitle = $pageSEO->titleSEO;
+        $pageDescription = $pageSEO->descriptionSEO;
+        $pageKeywords = $pageSEO->keywordsSEO;
+
     	$searchPhrase = $request->searchPhrase;
-    	return view('search', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['searchPhrase', 'pageTitle']));
+        $products = Product::where('title', 'like', $searchPhrase.'%')->paginate(12);
+        $most_saled_last;
+        if (count($products)) {
+            $most_saled_last = $products->sortByDesc('most_saled')->take(5)->last()->most_saled;
+        }
+
+        $searchProductsCategories = ProductsCategory::where('title', 'like', $searchPhrase.'%')->paginate(12);
+
+        $records = Record::where('title', 'like', $searchPhrase.'%')->paginate(6);
+
+    	return view('search', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['searchPhrase', 'pageTitle', 'pageDescription', 'pageKeywords', 'products', 'most_saled_last', 'searchProductsCategories', 'records']));
     }
 
     public function cart()
     {
-        $pageTitle = 'Корзина';
+        $pageSEO = SEO_Page::where('page', '=', 'Корзина')->first();
+        $pageTitle = $pageSEO->titleSEO;
+        $pageDescription = $pageSEO->descriptionSEO;
+        $pageKeywords = $pageSEO->keywordsSEO;
         $orderedProducts = Cart::getContent();
-        return view('cart', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'orderedProducts']));
+        return view('cart', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'pageDescription', 'pageKeywords', 'orderedProducts']));
     }
 
     public function addToCart(int $productId, int $productQuantity = 1)
@@ -61,6 +83,10 @@ class FrontPagesController extends Controller
 
     public function order(Request $request)
     {
+        $pageSEO = SEO_Page::where('page', '=', 'Оформить заказ')->first();
+        $pageTitle = $pageSEO->titleSEO;
+        $pageDescription = $pageSEO->descriptionSEO;
+        $pageKeywords = $pageSEO->keywordsSEO;
         foreach ($request->all() as $key => $value) {
             if (strpos($key, 'itemQuantity') !== false) {
                 preg_match('/\d+$/', $key, $matches);
@@ -72,11 +98,10 @@ class FrontPagesController extends Controller
                 ));
             }
         }
-        $pageTitle = 'Оформить заказ';
         $orderedProducts = Cart::getContent();
         $totalPrice = Cart::getSubTotal();
         $user = Auth::user();
-        return view('order', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'orderedProducts', 'totalPrice', 'user']));
+        return view('order', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'pageDescription', 'pageKeywords', 'orderedProducts', 'totalPrice', 'user']));
     }
 
     public function makeOrder(Request $request)
@@ -111,25 +136,48 @@ class FrontPagesController extends Controller
 
     public function deliveryPayment()
     {
-        $pageTitle = 'Доставка и оплата';
-        return view('delivery-payment', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle']));
+        $pageSEO = SEO_Page::where('page', '=', 'Доставка и оплата')->first();
+        $pageTitle = $pageSEO->titleSEO;
+        $pageDescription = $pageSEO->descriptionSEO;
+        $pageKeywords = $pageSEO->keywordsSEO;
+        $deliveryActive = true;
+        return view('delivery-payment', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'pageDescription', 'pageKeywords', 'deliveryActive']));
     }
 
     public function about()
     {
-        $pageTitle = 'О нас';
-        return view('about', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle']));
+        $pageSEO = SEO_Page::where('page', '=', 'О нас')->first();
+        $pageTitle = $pageSEO->titleSEO;
+        $pageDescription = $pageSEO->descriptionSEO;
+        $pageKeywords = $pageSEO->keywordsSEO;
+        $aboutActive = true;
+        return view('about', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'pageDescription', 'pageKeywords', 'aboutActive']));
+    }
+
+    public function contacts()
+    {
+        $pageSEO = SEO_Page::where('page', '=', 'Контакты')->first();
+        $pageTitle = $pageSEO->titleSEO;
+        $pageDescription = $pageSEO->descriptionSEO;
+        $pageKeywords = $pageSEO->keywordsSEO;
+        $contactsActive = true;
+        return view('contacts', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'pageDescription', 'pageKeywords', 'contactsActive']));
     }
 
     public function productsServices()
     {
-        $pageTitle = 'Товары и услуги';
+        $pageSEO = SEO_Page::where('page', '=', 'Товары и услуги')->first();
+        $pageTitle = $pageSEO->titleSEO;
+        $pageDescription = $pageSEO->descriptionSEO;
+        $pageKeywords = $pageSEO->keywordsSEO;
+        $productsActive = true;
         $products = Product::paginate(12);
+        $productsActive = true;
         $most_saled_last;
         if (count($products)) {
             $most_saled_last = $products->sortByDesc('most_saled')->take(5)->last()->most_saled;
         }
-        return view('products-services', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'products', 'most_saled_last']));
+        return view('products-services', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'pageDescription', 'pageKeywords', 'products', 'productsActive', 'most_saled_last']));
     }
 
     public function categoryProductsServices(int $categoryId)
@@ -137,12 +185,15 @@ class FrontPagesController extends Controller
         $products = Product::where('category_id', '=', $categoryId)->paginate(12);
         $productsCategory = ProductsCategory::findOrFail($categoryId);
         $pageTitle = $productsCategory->titleSEO;
+        $pageDescription = $productsCategory->descriptionSEO;
+        $pageKeywords = $productsCategory->keywordsSEO;
+        $productsActive = true;
         $allProducts = Product::all();
         $most_saled_last;
         if (count($allProducts)) {
             $most_saled_last = $allProducts->sortByDesc('most_saled')->take(5)->last()->most_saled;
         }
-        return view('products-services', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'products', 'most_saled_last']));
+        return view('products-services', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'pageDescription', 'pageKeywords', 'productsCategory', 'productsActive', 'products', 'most_saled_last']));
     }
 
     public function productPage(int $productId)
@@ -150,49 +201,62 @@ class FrontPagesController extends Controller
         $product = Product::findOrFail($productId);
         $pageTitle = $product->titleSEO;
         $pageDescription = $product->descriptionSEO;
+        $productsActive = true;
         $pageKeywords = $product->keywordsSEO;
         $products = Product::all();
         $most_saled_last;
         if (count($products)) {
             $most_saled_last = $products->sortByDesc('most_saled')->take(5)->last()->most_saled;
         }
-        return view('product-page', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'product', 'most_saled_last', 'pageDescription', 'pageKeywords']));
+        return view('product-page', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'product', 'most_saled_last', 'productsActive', 'pageDescription', 'pageKeywords']));
     }
 
     public function promoAction()
     {
-        $pageTitle = 'Акция';
+        $pageSEO = SEO_Page::where('page', '=', 'Акции')->first();
+        $pageTitle = $pageSEO->titleSEO;
+        $pageDescription = $pageSEO->descriptionSEO;
+        $pageKeywords = $pageSEO->keywordsSEO;
         $allProducts = Product::all();
+        $promoActive = true;
         $most_saled_last;
         if (count($allProducts)) {
             $most_saled_last = $allProducts->sortByDesc('most_saled')->take(5)->last()->most_saled;
         }
         $products = Product::where('promo_action', '=', '1')->paginate(12);
-        return view('promo-action', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'products', 'most_saled_last']));
+        return view('promo-action', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'pageDescription', 'pageKeywords', 'promoActive', 'products', 'most_saled_last']));
     }
 
     public function records()
     {
-        $pageTitle = 'Новости';
+        $pageSEO = SEO_Page::where('page', '=', 'Новости')->first();
+        $pageTitle = $pageSEO->titleSEO;
+        $pageDescription = $pageSEO->descriptionSEO;
+        $pageKeywords = $pageSEO->keywordsSEO;
+        $recordsActive = true;
         $records = Record::paginate(6);
-        return view('records', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'records']));
+        return view('records', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'pageDescription', 'pageKeywords', 'recordsActive', 'records']));
     }
 
     public function categoryRecords(int $categoryId)
     {
         $records = Record::where('category_id', '=', $categoryId)->paginate(12);
         $recordsCategory = RecordsCategory::findOrFail($categoryId);
+        $recordsActive = true;
         $pageTitle = $recordsCategory->titleSEO;
-        return view('records', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'records']));
+        $pageDescription = $recordsCategory->descriptionSEO;
+        $pageKeywords = $recordsCategory->keywordsSEO;
+        return view('records', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'pageDescription', 'pageKeywords', 'recordsActive', 'records']));
     }
 
     public function recordPage(int $recordId)
     {
         $record = Record::findOrFail($recordId);
         $pageTitle = $record->titleSEO;
+        $recordsActive = true;
         $pageDescription = $record->descriptionSEO;
         $pageKeywords = $record->keywordsSEO;
-        return view('record-page', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'record', 'pageDescription', 'pageKeywords']));
+        return view('record-page', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'recordsActive', 'record', 'pageDescription', 'pageKeywords']));
     }
 
 }

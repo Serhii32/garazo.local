@@ -33,7 +33,9 @@ Route::get('record-page/{recordId}', ['as' => 'page.record', 'uses' => 'FrontPag
 
 Route::get('about', ['as' => 'page.about', 'uses' => 'FrontPagesController@about']);
 
-Route::post('search', ['as' => 'page.search', 'uses' => 'FrontPagesController@search']);
+Route::get('contacts', ['as' => 'page.contacts', 'uses' => 'FrontPagesController@contacts']);
+
+Route::get('search', ['as' => 'page.search', 'uses' => 'FrontPagesController@search']);
 
 Route::post('addToCart/{productId}/{productQuantity?}', ['as' => 'add-to-cart', 'uses' => 'FrontPagesController@addToCart']);
 
@@ -73,14 +75,6 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'isAdmin'], 'as' 
 
 		Route::resource('attributes', 'AttributesController')->except(['show']);
 
-		// Route::get('attributes', ['as' => 'attributes.index', 'uses' => 'AttributesController@index']);
-
-		// Route::get('attributes/{attribute}/edit', ['as' => 'attributes.edit', 'uses' => 'AttributesController@edit']);
-
-		// Route::match(['put', 'patch'], 'attributes/store', ['as' => 'attributes.update', 'uses' => 'AttributesController@update']);
-
-		// Route::delete('attributes/{attribute}/destroy', ['as' => 'attributes.destroy', 'uses' => 'AttributesController@destroy']);
-
 		Route::get('users', ['as' => 'users.index', 'uses' => 'UsersController@index']);
 
 		Route::get('users/{user}/show', ['as' => 'users.show', 'uses' => 'UsersController@show']);
@@ -94,6 +88,8 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'isAdmin'], 'as' 
 		Route::delete('orders/{order}', ['as' => 'orders.destroy', 'uses' => 'OrdersController@destroy']);
 
 		Route::get('pagesSEO', ['as' => 'pagesSEO.index', 'uses' => 'SEOController@index']);
+
+		Route::put('pagesSEO/update', ['as' => 'pagesSEO.update', 'uses' => 'SEOController@update']);
 
 	});
 
@@ -114,13 +110,10 @@ Route::group(['namespace' => 'User', 'middleware' => ['auth', 'isUser'], 'as' =>
 //admin email, where orders sending
 //admin and user page with nofollow noindex tag
 //admin can delete users with message to email
-//add seo options in admin panel
 //change error pages in views
-//orders in user panel will be on the home page
 //style delivery-payment page
 //add request for order
 //add attributes and orders policies
 //style records page
-//menu active page
-//search results page
 //add attributes managing values
+//add request to search and SEOpages

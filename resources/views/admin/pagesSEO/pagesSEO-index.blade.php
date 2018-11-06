@@ -13,31 +13,29 @@
                     </div>
                 @endif
                 <div class="py-4 bg-white border rounded border-light shadow">
-                    {!! Form::open(['route'=> ['admin.records.update', $record->id], 'method' => 'put', 'files' => true]) !!}
+                    {!! Form::open(['route'=> 'admin.pagesSEO.update', 'method' => 'put']) !!}
                         <h2 class="text-center font-weight-bold text-uppercase pb-5">SEO характеристика страниц</h2>
                         <div class="container-fluid">
-                            <div class="row">
-                                <div class="form-group">
-                                    {!! Form::label('titleSEO', 'SEO заголовок:', ['class' => 'text-uppercase font-weight-bold']) !!}
-                                    {!! Form::text('titleSEO', $record->titleSEO, ['placeholder'=>'SEO заголовок'] + ($errors->has('titleSEO') ? ['class'=>'form-control is-invalid'] : ['class'=>'form-control'])) !!}
-                                    <span class="text-danger">{{ $errors->first('titleSEO') }}</span>
+                        	@foreach($pages as $page)
+                        		<div class="card p-5 mb-3">
+									<h4 class="text-uppercase font-weight-bold pt-2 text-center">{{$page->page}}</h4>
+	                                <div class="form-group">
+	                                    {!! Form::label('titleSEO_'.$page->id, 'SEO заголовок:', ['class' => 'text-uppercase font-weight-bold']) !!}
+	                                    {!! Form::text('titleSEO_'.$page->id, $page->titleSEO, ['placeholder'=>'SEO заголовок'] + ($errors->has('titleSEO_'.$page->id) ? ['class'=>'form-control is-invalid'] : ['class'=>'form-control'])) !!}
+	                                    <span class="text-danger">{{ $errors->first('titleSEO_'.$page->id) }}</span>
+	                                </div>
+	                                <div class="form-group">
+	                                    {!! Form::label('descriptionSEO_'.$page->id, 'Мета описание:', ['class' => 'text-uppercase font-weight-bold']) !!}
+	                                    {!! Form::textarea('descriptionSEO_'.$page->id, $page->descriptionSEO, ['placeholder'=>'Мета описание'] + ($errors->has('descriptionSEO_'.$page->id) ? ['class'=>'form-control is-invalid'] : ['class'=>'form-control'])) !!}
+	                                    <span class="text-danger">{{ $errors->first('descriptionSEO_'.$page->id) }}</span>
+	                                </div>
+	                                <div class="form-group">
+	                                    {!! Form::label('keywordsSEO_'.$page->id, 'Ключевые слова:', ['class' => 'text-uppercase font-weight-bold']) !!}
+	                                    {!! Form::text('keywordsSEO_'.$page->id, $page->keywordsSEO, ['placeholder'=>'Ключевые слова'] + ($errors->has('keywordsSEO_'.$page->id) ? ['class'=>'form-control is-invalid'] : ['class'=>'form-control'])) !!}
+	                                    <span class="text-danger">{{ $errors->first('keywordsSEO_'.$page->id) }}</span>
+	                                </div>
                                 </div>
-                                <div class="form-group">
-                                    {!! Form::label('descriptionSEO', 'Мета описание:', ['class' => 'text-uppercase font-weight-bold']) !!}
-                                    {!! Form::textarea('descriptionSEO', $record->descriptionSEO, ['placeholder'=>'Мета описание'] + ($errors->has('descriptionSEO') ? ['class'=>'form-control is-invalid'] : ['class'=>'form-control'])) !!}
-                                    <span class="text-danger">{{ $errors->first('descriptionSEO') }}</span>
-                                </div>
-                                <div class="form-group">
-                                    {!! Form::label('keywordsSEO', 'Ключевые слова:', ['class' => 'text-uppercase font-weight-bold']) !!}
-                                    {!! Form::text('keywordsSEO', $record->keywordsSEO, ['placeholder'=>'Ключевые слова'] + ($errors->has('keywordsSEO') ? ['class'=>'form-control is-invalid'] : ['class'=>'form-control'])) !!}
-                                    <span class="text-danger">{{ $errors->first('keywordsSEO') }}</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                {!! Form::label('description', 'Основная часть:', ['class' => 'text-uppercase font-weight-bold']) !!}
-                                {!! Form::textarea('description', $record->description, ['id'=>'editor'] + ($errors->has('description') ? ['class'=>'form-control is-invalid'] : ['class'=>'form-control'])) !!}
-                                <span class="text-danger">{{ $errors->first('description') }}</span>
-                            </div>
+                            @endforeach
                         </div>
                         <div class="col-md-6 m-auto">
                             {!! Form::submit('Сохранить', ['class'=>'btn btn-success w-100 text-uppercase font-weight-bold']) !!}
