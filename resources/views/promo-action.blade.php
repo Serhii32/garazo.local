@@ -2,20 +2,20 @@
 @section('content')
 	@include('shared.front-header')
 	<main class="py-4">
-		<div class="container-fluid">
+		<div class="container">
 			<div class="row">
 				@include('shared.sidebar')
 				<div class="col-12 col-md-8 col-lg-9">
+					<div class="text-dark font-weight-bold text-uppercase">{{ Breadcrumbs::render('page.promo-action') }}</div>
 					@if(count($products))
-						<h3 class="text-dark font-weight-bold text-uppercase text-center p-4">Акции</h3>
 						<div class="container">
 							<div class="row justify-content-center">
 	                            @foreach($products as $product)
-	                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 my-3">
+	                                <div class="col-12 col-sm-6 col-md-6 col-lg-4 my-3">
 	                                    <div class="card h-100 shadow p-2">
 	                                        <a class="card-link text-secondary p-1" href="#">
 	                                            <div class="text-center">
-	                                            	<img class="img-fluid img-thumbnail" src="{{$product->main_photo ? asset($product->main_photo) : asset('img/common/default.png')}}" alt="{{ $product->title }}">
+	                                            	<img class="img-fluid product-photo" src="{{$product->main_photo ? asset($product->main_photo) : asset('img/common/default.png')}}" alt="{{ $product->title }}">
 	                                            	@if($product->most_saled !== 0 && $product->most_saled >= $most_saled_last)
 	                                            		<span style="position: absolute; top: 0px; right: 0px; z-index: 1; width: 131px; height: 39px; background: url({{asset('img/common/ribbon.png')}}) 0 -105px no-repeat; color: #fff; text-align: center; font-size: 13px; line-height: 37px;">Топ продаж</span>
 	                                            	@endif

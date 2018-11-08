@@ -12,6 +12,7 @@ class AttributesController extends Controller
 {
     public function index()
     {
+        $this->authorize('manage', \App\ProductsAttributesName::class);
         $attributesNames = ProductsAttributesName::all();
         $pageTitle = 'Характеристики товаров';
         return view('admin.attributes.attributes-index', compact(['attributesNames', 'pageTitle']));
@@ -34,6 +35,7 @@ class AttributesController extends Controller
 
     public function edit(int $id)
     {
+        $this->authorize('manage', \App\ProductsAttributesName::class);
         $attributesName = ProductsAttributesName::findOrFail($id);
         $pageTitle = $attributesName->name;
         return view('admin.attributes.attributes-edit', compact(['attributesName', 'pageTitle']));
@@ -41,6 +43,7 @@ class AttributesController extends Controller
 
     public function update(StoreAttributeNameRequest $request, int $id)
     {
+        $this->authorize('manage', \App\ProductsAttributesName::class);
         $attributesName = ProductsAttributesName::findOrFail($id);
         $attributesName->name = $request->name;
         $attributesName->save();
@@ -49,6 +52,7 @@ class AttributesController extends Controller
 
     public function destroy(int $id)
     {
+        $this->authorize('manage', \App\ProductsAttributesName::class);        
         $attributesName = ProductsAttributesName::findOrFail($id);
         $attributesName->values()->detach();
         $attributesName->products()->detach();

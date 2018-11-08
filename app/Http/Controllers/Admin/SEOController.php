@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\SEO_Page;
+use App\Http\Requests\StoreSEORequest;
 
 class SEOController extends Controller
 {
@@ -14,7 +15,7 @@ class SEOController extends Controller
     	return view('admin.pagesSEO.pagesSEO-index', compact(['pages']));
     }
 
-    public function update(Request $request)
+    public function update(StoreSEORequest $request)
     {
 
     	for($i = 1; $i <= (count($request->all())-2)/3; $i++){

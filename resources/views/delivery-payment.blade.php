@@ -2,10 +2,13 @@
 @section('content')
 	@include('shared.front-header')
 	<main class="py-4">
-		<div class="container-fluid">
+		<div class="container">
 			<div class="row">
 				@include('shared.sidebar')
 				<div class="col-12 col-md-8 col-lg-9">
+
+					<div class="text-dark font-weight-bold text-uppercase">{{ Breadcrumbs::render('page.delivery-payment') }}</div>
+
 					<div class="row">
 						<div class="col-12 col-md-6">
 							<h5 class="text-dark font-weight-bold text-uppercase text-center p-4">Способы доставки:</h5>

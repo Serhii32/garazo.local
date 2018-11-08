@@ -6,9 +6,6 @@
 .custom-links {
 	font-size: 1.5em;
 }
-/*a {
-	word-break: break-all;
-}*/
 button {
 	white-space: normal !important;
 }
@@ -21,4 +18,18 @@ button {
 }
 .navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
 	color: rgb(122, 230, 193) !important;
+}
+li > .sidebar-items:hover {
+    color: #7ae6c1 !important;
+}
+.product-photo {
+	width: 100%; 
+	height: 150px; 
+	object-fit: contain;
+}
+.styled-background {
+	background: #7ae6c1;
+}
+body {
+	background: url('/img/common/bg.png');
 }

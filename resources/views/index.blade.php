@@ -3,10 +3,12 @@
 	<link href="{{ asset('css/frontend-index-slider.css') }}" rel="stylesheet">
 	@include('shared.front-header')
 	<main class="py-4">
-		<div class="container-fluid">
+		<div class="container">
 			<div class="row">
 				@include('shared.sidebar')
 				<div class="col-12 col-md-8 col-lg-9">
+
+					<div class="text-dark font-weight-bold text-uppercase">{{ Breadcrumbs::render('page.index') }}</div>
 
 					<div class="customSlideshow">
 						
@@ -49,10 +51,10 @@
 	                            @foreach($productsCategories as $productsCategory)
 	                                <div class="col-12 col-sm-6 my-3">
 	                                    <div class="card h-100 shadow p-2">
-	                                    	<div class="row">
-	                                    		<div class="col-12 col-sm-6">
+	                                    	<div class="row px-3">
+	                                    		<div class="col-12 col-sm-6 px-4">
 	                                    			<a class="card-link text-secondary p-1" href="{{route('page.products-category', $productsCategory->id)}}">
-			                                            <div class="text-center"><img class="img-fluid img-thumbnail" src="{{$productsCategory->photo ? asset($productsCategory->photo) : asset('img/common/default.png')}}" alt="{{ $productsCategory->title }}"></div>
+			                                            <div class="text-center"><img class="img-fluid img-thumbnail w-100" src="{{$productsCategory->photo ? asset($productsCategory->photo) : asset('img/common/default.png')}}" alt="{{ $productsCategory->title }}"></div>
 			                                        </a>
 	                                    		</div>
 	                                    		<div class="col-12 col-sm-6">
@@ -80,7 +82,7 @@
 	                                    <div class="card h-100 shadow p-2">
 	                                        <a class="card-link text-secondary p-1" href="{{route('page.product', $product->id)}}">
 	                                            <div class="text-center">
-	                                            	<img class="img-fluid img-thumbnail" src="{{$product->main_photo ? asset($product->main_photo) : asset('img/common/default.png')}}" alt="{{ $product->title }}">
+	                                            	<img class="img-fluid product-photo" src="{{$product->main_photo ? asset($product->main_photo) : asset('img/common/default.png')}}" alt="{{ $product->title }}">
 	                                            	@if($product->most_saled !== 0 && $product->most_saled >= $most_saled_last)
 	                                            		<span style="position: absolute; top: 0px; right: 0px; z-index: 1; width: 131px; height: 39px; background: url({{asset('img/common/ribbon.png')}}) 0 -105px no-repeat; color: #fff; text-align: center; font-size: 13px; line-height: 37px;">Топ продаж</span>
 	                                            	@endif

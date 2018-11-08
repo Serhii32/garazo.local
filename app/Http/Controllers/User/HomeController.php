@@ -65,11 +65,11 @@ class HomeController extends Controller
         return redirect('/');
     }
 
-    public function destroyOrder(int $id)
+    public function cancelOrder(Request $request, int $id)
     {
         $order = Order::findOrFail($id);
-        $order->products()->detach();
-        $order->delete();
-        return back()->with(['message' => 'Заказ успешно удален']);
+        $order->status = $request->status;
+        $order->save();
+        return back()->with(['message' => 'Заказ успешно отменен']);
     }
 }

@@ -2,12 +2,15 @@
 @section('content')
 	@include('shared.front-header')
 	<main class="py-4">
-		<div class="container-fluid">
+		<div class="container">
 			<div class="row">
 				@include('shared.sidebar')
 				<div class="col-12 col-md-8 col-lg-9">
+
+                    <div class="text-dark font-weight-bold text-uppercase">{{ Breadcrumbs::render('page.product', $product) }}</div>
+
 					<div class="container">
-						<div class="row justify-content-center">
+						<div class="row justify-content-center px-4">
                             <div class="col-12 col-md-4 my-3 card h-100 shadow p-2">
                                 <img class="img-fluid img-thumbnail" src="{{$product->main_photo ? asset($product->main_photo) : asset('img/common/default.png')}}" alt="{{ $product->title }}">
                                 @if($product->most_saled !== 0 && $product->most_saled >= $most_saled_last)
@@ -26,7 +29,7 @@
 	                            {!! Form::open(['route'=> ['add-to-cart', $product->id], 'class'=>'mb-0 mt-auto mx-auto w-100 p-0']) !!}
                                     {!! Form::submit('Купить', ['class'=>'btn btn-warning mb-0 mt-auto mx-auto text-uppercase font-weight-bold']) !!}
                                 {!! Form::close() !!}
-                                <p class="m-2 text-justify text-secondary" style="font-size: 20px;">{{$product->short_description}}</p>
+                                <p class="text-justify text-secondary" style="font-size: 20px;">{{$product->short_description}}</p>
 	                        </div>
                         </div>
                         @if(!empty($product->attributesNames()->first()))

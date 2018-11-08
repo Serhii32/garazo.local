@@ -7,10 +7,10 @@
     <div class="m-2 bg-white border border-light shadow rounded">
         <ul class="list-group list-group-flush">
             <li class="list-group-item list-group-item-action p-0">
-                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="{{route('user.home.index')}}">Страница пользователя</a>
+                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="{{route('user.home.index')}}">Мои заказы</a>
             </li>
             <li class="list-group-item list-group-item-action p-0">
-                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="{{route('user.home.edit')}}">Настройни профиля</a>
+                <a class="nav-link text-dark font-weight-bold text-uppercase text-center" href="{{route('user.home.edit')}}">Настройки профиля</a>
             </li>
         </ul>
     </div>

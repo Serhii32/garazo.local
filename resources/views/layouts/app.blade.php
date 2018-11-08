@@ -36,7 +36,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="tel:+3800674306918"><i class="fas fa-phone"></i> +(380)067-430-69-18</a>
+                            <a class="nav-link" href="tel:+380674306918"><i class="fas fa-phone"></i> 067-430-69-18</a>
                         </li>
                     </ul>
 
@@ -59,7 +59,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item text-center border-bottom" href="{{ route(Auth::user()->role()->first()->name . '.home.index') }}">Страница<br>{{Auth::user()->role()->first()->id == 1 ? "администратора" : "пользователя"}}</a>
+                                    <a class="dropdown-item text-center border-bottom" href="{{ route(Auth::user()->role()->first()->name . '.home.index') }}">{!!Auth::user()->role()->first()->id == 1 ? "Страница<br>администратора" : "Мои заказы"!!}</a>
                                     <a class="dropdown-item text-center border-bottom" href="{{ route(Auth::user()->role()->first()->name . '.home.edit') }}">Настройки<br>профиля</a>
                                     <a class="dropdown-item text-center" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

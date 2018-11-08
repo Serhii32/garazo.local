@@ -1,5 +1,5 @@
 <header>
-	<div class="container-fluid">
+	<div class="container">
 	  	<div class="row">
 	    	<div class="col-12 col-md-3 text-center p-2">
 				<a class="card-link text-dark" href="{{route('page.index')}}">
@@ -9,12 +9,13 @@
 	    	<div class="col-12 col-md-9">
 	    		<div class="row">
 	    			<div class="col-12 col-md-6 m-auto">
-						<h4 class="text-center m-2 text-uppercase text-center">Мойки самообслуживания</h4>
+						<h4 class="text-center m-2 text-uppercase text-center">Оборудование и комплектующие для автомоек и моек самообслуживания</h4>
 	    			</div>
 	    			<div class="col-12 col-md-6">
 	    				{!! Form::open(['route' => 'page.search', 'method'=>'get', 'class' => 'form-inline p-3 input-group-btn search-panel row']) !!}
-							{!! Form::text('searchPhrase', '', ['class' => 'form-control col-12 col-sm-11 col-md-10 rounded-0', 'placeholder' => 'Поиск']) !!}
+							{!! Form::text('searchPhrase', old('searchPhrase'), ['placeholder' => 'Поиск'] + ($errors->has('searchPhrase') ? ['class'=>'form-control col-12 col-sm-11 col-md-10 rounded-0 is-invalid'] : ['class'=>'form-control col-12 col-sm-11 col-md-10 rounded-0'])) !!}
 							{!! Form::button('<i class="fa fa-search"></i>', ['type' => 'submit', 'class' => 'btn btn-default col-12 col-sm-1 col-md-2 rounded-0']) !!}
+							<span class="text-danger">{{ $errors->first('searchPhrase') }}</span>
     					{!! Form::close() !!}
 	    			</div>
 	    		</div>

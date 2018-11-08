@@ -11,6 +11,9 @@ use Cart;
 use App\Order;
 use Illuminate\Support\Facades\Auth;
 use App\SEO_Page;
+use App\Http\Requests\StoreOrderRequest;
+use App\Http\Requests\SearchRequest;
+use GuzzleHttp\Client;
 
 class FrontPagesController extends Controller
 {
@@ -37,7 +40,7 @@ class FrontPagesController extends Controller
     	return view('index', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'pageDescription', 'pageKeywords', 'homeActive', 'products', 'most_saled_last']));
     }
 
-    public function search(Request $request)
+    public function search(SearchRequest $request)
     {
         $pageSEO = SEO_Page::where('page', '=', 'Поиск')->first();
         $pageTitle = $pageSEO->titleSEO;
@@ -71,8 +74,8 @@ class FrontPagesController extends Controller
     public function addToCart(int $productId, int $productQuantity = 1)
     {
         $product = Product::findOrFail($productId);
-        Cart::add($productId, $product->title, $product->price, $productQuantity);
-        return back();
+        Cart::add($productId, $product->title, $product->price, $productQuantity, ['main_photo' => $product->main_photo]);
+        return redirect()->route('page.cart');
     }
 
     public function deleteFromCart(int $productId)
@@ -83,6 +86,26 @@ class FrontPagesController extends Controller
 
     public function order(Request $request)
     {
+
+    //      "modelName": "AddressGeneral",
+    // "calledMethod": "getSettlements",
+    // "methodProperties": {},
+    // "apiKey": "63179e234dc98ab6ef5c911fa3c8dbba"
+
+        $client = new Client();
+        // $response = $client->request('POST', 'https://api.novaposhta.ua/v2.0/json/AddressGeneral/getSettlements/');
+        $response = $client->post('https://api.novaposhta.ua/v2.0/json/Address/getWarehouses/', [
+            \GuzzleHttp\RequestOptions::JSON => [
+                'modelName' => 'Address', 
+                'calledMethod' => 'getWarehouses', 
+                // 'methodProperties' => [
+                //     'page' => '1'
+                // ]
+            ]
+        ]);
+        $response = $response->getBody()->getContents();
+        dd($response) ;
+
         $pageSEO = SEO_Page::where('page', '=', 'Оформить заказ')->first();
         $pageTitle = $pageSEO->titleSEO;
         $pageDescription = $pageSEO->descriptionSEO;
@@ -104,7 +127,7 @@ class FrontPagesController extends Controller
         return view('order', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'pageDescription', 'pageKeywords', 'orderedProducts', 'totalPrice', 'user']));
     }
 
-    public function makeOrder(Request $request)
+    public function makeOrder(StoreOrderRequest $request)
     {
         $order = new Order();
         $order->name = $request->name;
@@ -234,19 +257,19 @@ class FrontPagesController extends Controller
         $pageDescription = $pageSEO->descriptionSEO;
         $pageKeywords = $pageSEO->keywordsSEO;
         $recordsActive = true;
-        $records = Record::paginate(6);
+        $records = Record::orderBy('updated_at', 'desc')->paginate(6);
         return view('records', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'pageDescription', 'pageKeywords', 'recordsActive', 'records']));
     }
 
     public function categoryRecords(int $categoryId)
     {
-        $records = Record::where('category_id', '=', $categoryId)->paginate(12);
+        $records = Record::where('category_id', '=', $categoryId)->orderBy('updated_at', 'desc')->paginate(6);
         $recordsCategory = RecordsCategory::findOrFail($categoryId);
         $recordsActive = true;
         $pageTitle = $recordsCategory->titleSEO;
         $pageDescription = $recordsCategory->descriptionSEO;
         $pageKeywords = $recordsCategory->keywordsSEO;
-        return view('records', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'pageDescription', 'pageKeywords', 'recordsActive', 'records']));
+        return view('records', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'pageDescription', 'pageKeywords', 'recordsActive', 'recordsCategory', 'records']));
     }
 
     public function recordPage(int $recordId)

@@ -2,11 +2,13 @@
 @section('content')
 	@include('shared.front-header')
 	<main class="py-4">
-		<div class="container-fluid">
+		<div class="container">
 			<div class="row">
 				@include('shared.sidebar')
 				<div class="col-12 col-md-8 col-lg-9">
-					<h3 class="text-dark font-weight-bold text-uppercase text-center p-4">Контакты</h3>
+
+					<div class="text-dark font-weight-bold text-uppercase">{{ Breadcrumbs::render('page.contacts') }}</div>
+
 					<div class="row">
 						<div class="col-12 col-md-6 col-lg-4">
 							<h5 class="text-dark font-weight-bold text-uppercase p-4">Адрес: г. Винница, ул. Пирогова 151,е</h5>

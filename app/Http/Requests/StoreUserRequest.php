@@ -36,7 +36,7 @@ class StoreUserRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             if ( !Hash::check($this->current_password, $this->user()->password) ) {
-                $validator->errors()->add('current_password', 'Your current password is incorrect.');
+                $validator->errors()->add('current_password', 'Неправильный пароль');
             }
         });
         return;

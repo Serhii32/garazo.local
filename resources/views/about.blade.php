@@ -2,10 +2,13 @@
 @section('content')
 	@include('shared.front-header')
 	<main class="py-4">
-		<div class="container-fluid">
+		<div class="container">
 			<div class="row">
 				@include('shared.sidebar')
 				<div class="col-12 col-md-8 col-lg-9">
+
+					<div class="text-dark font-weight-bold text-uppercase">{{ Breadcrumbs::render('page.about') }}</div>
+
 					<h4 class="container text-dark text-justify">
 						Компания Garazo предлагает широкий выбор автомоек самообслуживания, комплектующих и аксессуаров к ним, автохимии, автохимчистки, а также комплектующих и расходников для автомоек.<br><br>
 

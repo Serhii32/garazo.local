@@ -2,17 +2,25 @@
 @section('content')
 	@include('shared.front-header')
 	<main class="py-4">
-		<div class="container-fluid">
+		<div class="container">
 			<div class="row">
 				@include('shared.sidebar')
 				<div class="col-12 col-md-8 col-lg-9">
+					<div class="text-dark font-weight-bold text-uppercase">
+						@isset($recordsCategory)
+							{{ Breadcrumbs::render('page.records-category', $recordsCategory) }}
+						@endisset
+						@empty($recordsCategory)
+							{{ Breadcrumbs::render('page.records') }}
+						@endempty
+					</div>
 					@if(count($records))
 						<h3 class="text-dark font-weight-bold text-uppercase text-center p-4">Новости</h3>
 						<div class="container">
 							<div class="row justify-content-center">
 	                            @foreach($records as $record)
 	                                <div class="my-3">
-	                                    <div class="p-3 shadow row">
+	                                    <div class="p-3 shadow row bg-white">
 	                                    	<div class="col-12 col-sm-4 col-md-3">
 	                                    		<a class="card-link text-secondary" href="{{route('page.record', $record->id)}}">
 		                                            <div class="text-center">

@@ -2,16 +2,16 @@
 @section('content')
 	@include('shared.front-header')
 	<main class="py-4">
-		<div class="container-fluid">
+		<div class="container">
 			<div class="row">
 				@include('shared.sidebar')
 				<div class="col-12 col-md-8 col-lg-9">
-					<h3 class="text-dark font-weight-bold text-uppercase text-center p-4">Оформить заказ</h3>
+					<div class="text-dark font-weight-bold text-uppercase">{{ Breadcrumbs::render('page.order') }}</div>
 					@if(count($orderedProducts))
 						@foreach($orderedProducts as $orderedProduct)
 							<div class="row m-3 border-bottom p-1">
 								<div class="col-md-2 pb-2 text-center">
-									<img class="img-fluid img-thumbnail" style="max-height: 100px;" src="{{$orderedProduct->main_photo ? asset($orderedProduct->main_photo) : asset('img/common/default.png')}}" alt="{{ $orderedProduct->name }}">
+									<img class="img-fluid img-thumbnail" style="max-height: 100px;" src="{{$orderedProduct->attributes['main_photo'] ? asset($orderedProduct->attributes['main_photo']) : asset('img/common/default.png')}}" alt="{{ $orderedProduct->name }}">
 								</div>
 								<div class="col-md-3 text-dark font-weight-bold text-uppercase pb-2">
 									<p>Название:</p>

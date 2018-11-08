@@ -101,7 +101,7 @@ Route::group(['namespace' => 'User', 'middleware' => ['auth', 'isUser'], 'as' =>
 	Route::get('home/edit', ['as' => 'home.edit', 'uses' => 'HomeController@edit']);
 	Route::match(['put', 'patch'], 'home/store', ['as' => 'home.update', 'uses' => 'HomeController@update']);
 	Route::delete('home/destroy', ['as' => 'home.destroy', 'uses' => 'HomeController@destroy']);
-	Route::delete('home/destroy-order/{order}', ['as' => 'home.destroy-order', 'uses' => 'HomeController@destroyOrder']);
+	Route::match(['put', 'patch'], 'home/cancel-order/{order}', ['as' => 'home.cancel-order', 'uses' => 'HomeController@cancelOrder']);
 
 });
 
@@ -111,9 +111,5 @@ Route::group(['namespace' => 'User', 'middleware' => ['auth', 'isUser'], 'as' =>
 //admin and user page with nofollow noindex tag
 //admin can delete users with message to email
 //change error pages in views
-//style delivery-payment page
-//add request for order
-//add attributes and orders policies
-//style records page
 //add attributes managing values
-//add request to search and SEOpages
+//request autorisation

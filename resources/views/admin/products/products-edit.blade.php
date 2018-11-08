@@ -3,7 +3,7 @@
 @section('content')
 <link href="{{ asset('css/products-attributes-autocomplete.css') }}" rel="stylesheet">
 <main>
-    <div class="container-fluid">
+    <div class="container">
         <div class="row justify-content-center">
             @include('admin.shared.sidebar')
             <div class="col-12 col-md-9 p-4">

@@ -2,7 +2,7 @@
 
 @section('content')
 <main>
-    <div class="container-fluid">
+    <div class="container">
         <div class="row justify-content-center">
             @include('admin.shared.sidebar')
             <div class="col-12 col-md-9 p-4">
@@ -17,7 +17,7 @@
                     @if(count($users))
                         <div class="container">
                             @foreach($users as $user)
-                                <div class="row my-3 h-100 shadow p-2">
+                                <div class="row my-3 h-100 shadow p-2 bg-white">
                                     <div class="col-12 col-md-3">
                                         <div class="text-center">
                                             <img class="img-fluid img-thumbnail my-2" src="{{$user->avatar ? asset($user->avatar) : asset('img/common/avatars/default.png')}}" alt="{{$user->name}}">

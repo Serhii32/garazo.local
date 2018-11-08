@@ -10,6 +10,7 @@ class OrdersController extends Controller
 {
     public function index()
     {
+        $this->authorize('manage', \App\Order::class);
         $orders = Order::orderBy('status')->paginate(12);
         $pageTitle = 'Список заказов';
         return view('admin.orders.orders-index', compact(['orders', 'pageTitle']));
@@ -17,6 +18,7 @@ class OrdersController extends Controller
 
     public function update(Request $request, int $id)
     {
+        $this->authorize('manage', \App\Order::class);
         $order = Order::findOrFail($id);
         $order->status = $request->status;
         $order->save();
@@ -25,6 +27,7 @@ class OrdersController extends Controller
 
     public function destroy(int $id)
     {
+        $this->authorize('manage', \App\Order::class);
         $order = Order::findOrFail($id);
         $order->products()->detach();
         $order->delete();
