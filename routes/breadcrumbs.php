@@ -39,6 +39,11 @@ Breadcrumbs::for('page.order', function ($trail) {
     $trail->push('Оформить заказ', route('page.order'));
 });
 
+Breadcrumbs::for('page.thank-you', function ($trail) {
+    $trail->parent('page.order');
+    $trail->push('Благодарим за заказ', route('page.thank-you'));
+});
+
 Breadcrumbs::for('page.search', function ($trail) {
 	$trail->parent('page.index');
     $trail->push('Поиск', route('page.search'));

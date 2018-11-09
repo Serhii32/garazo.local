@@ -33,6 +33,8 @@ Route::get('record-page/{recordId}', ['as' => 'page.record', 'uses' => 'FrontPag
 
 Route::get('about', ['as' => 'page.about', 'uses' => 'FrontPagesController@about']);
 
+Route::get('thank-you', ['as' => 'page.thank-you', 'uses' => 'FrontPagesController@thankYou']);
+
 Route::get('contacts', ['as' => 'page.contacts', 'uses' => 'FrontPagesController@contacts']);
 
 Route::get('search', ['as' => 'page.search', 'uses' => 'FrontPagesController@search']);
@@ -53,7 +55,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'isAdmin'], 'as' 
 	Route::get('home/edit', ['as' => 'home.edit', 'uses' => 'HomeController@edit']);
 	Route::match(['put', 'patch'], 'home/store', ['as' => 'home.update', 'uses' => 'HomeController@update']);
 	
-	Route::group(['middleware' => 'verified'], function () {
+	// Route::group(['middleware' => 'verified'], function () {
 
 		Route::resource('productsCategories', 'ProductsCategoriesController')->except(['create', 'show']);
 
@@ -91,18 +93,20 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'isAdmin'], 'as' 
 
 		Route::put('pagesSEO/update', ['as' => 'pagesSEO.update', 'uses' => 'SEOController@update']);
 
-	});
+	// });
 
 });
 
 Route::group(['namespace' => 'User', 'middleware' => ['auth', 'isUser'], 'as' => 'user.', 'prefix'=>'user'], function () {
 
-	Route::get('home', ['as' => 'home.index', 'uses' => 'HomeController@index']);
 	Route::get('home/edit', ['as' => 'home.edit', 'uses' => 'HomeController@edit']);
 	Route::match(['put', 'patch'], 'home/store', ['as' => 'home.update', 'uses' => 'HomeController@update']);
 	Route::delete('home/destroy', ['as' => 'home.destroy', 'uses' => 'HomeController@destroy']);
-	Route::match(['put', 'patch'], 'home/cancel-order/{order}', ['as' => 'home.cancel-order', 'uses' => 'HomeController@cancelOrder']);
-
+	
+	// Route::group(['middleware' => 'verified'], function () {
+		Route::get('home', ['as' => 'home.index', 'uses' => 'HomeController@index']);
+		Route::match(['put', 'patch'], 'home/cancel-order/{order}', ['as' => 'home.cancel-order', 'uses' => 'HomeController@cancelOrder']);
+	// });
 });
 
 //add captcha when registering

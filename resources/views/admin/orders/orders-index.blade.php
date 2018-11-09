@@ -24,6 +24,7 @@
                                     <h4 class="text-left" style="word-break: break-word;"><span class="text-uppercase">Email:</span> {{$order->email}}</h4>
                                     <h4 class="text-left text-uppercase">Телефон: {{$order->phone}}</h4>
                                     <h4 class="text-left text-uppercase">Доставка: @if($order->delivery == 1)Самовывоз @elseif($order->delivery == 2)Новая почта @else @endif </h4>
+                                    @if($order->delivery == 2 && $order->newPost)<h4 class="text-left text-uppercase">Адрес: {{$order->newPost}} </h4> @endif
                                     <h4 class="text-left text-uppercase">Оплата: @if($order->payment == 1)Предоплата на карту @elseif($order->payment == 2)Наложеный платеж @elseif($order->payment == 3)Безналичный @else @endif </h4>
                                     <div>
                                         @foreach($order->products()->get() as $product)

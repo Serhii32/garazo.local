@@ -14,6 +14,8 @@ use App\SEO_Page;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\SearchRequest;
 use GuzzleHttp\Client;
+// use Illuminate\Contracts\Cache\Repository;
+use Illuminate\Support\Facades\Cache;
 
 class FrontPagesController extends Controller
 {
@@ -86,26 +88,26 @@ class FrontPagesController extends Controller
 
     public function order(Request $request)
     {
-
-    //      "modelName": "AddressGeneral",
-    // "calledMethod": "getSettlements",
-    // "methodProperties": {},
-    // "apiKey": "63179e234dc98ab6ef5c911fa3c8dbba"
-
-        $client = new Client();
-        // $response = $client->request('POST', 'https://api.novaposhta.ua/v2.0/json/AddressGeneral/getSettlements/');
-        $response = $client->post('https://api.novaposhta.ua/v2.0/json/Address/getWarehouses/', [
-            \GuzzleHttp\RequestOptions::JSON => [
-                'modelName' => 'Address', 
-                'calledMethod' => 'getWarehouses', 
-                // 'methodProperties' => [
-                //     'page' => '1'
-                // ]
-            ]
-        ]);
-        $response = $response->getBody()->getContents();
-        dd($response) ;
-
+        if (!Cache::has('new-post')) {
+            $client = new Client();
+            $response = $client->post('https://api.novaposhta.ua/v2.0/json/Address/getWarehouses/', [
+                \GuzzleHttp\RequestOptions::JSON => [
+                    'modelName' => 'Address', 
+                    'calledMethod' => 'getWarehouses', 
+                ]
+            ]);
+            $response = $response->getBody()->getContents();
+            $decodedResponce = json_decode($response, true);
+            $output = [];
+            foreach ($decodedResponce['data'] as $oneItem) {
+                $output[$oneItem['CityDescriptionRu'] .' - '. $oneItem['DescriptionRu']] = $oneItem['CityDescriptionRu'] .' - '. $oneItem['DescriptionRu'];
+            }
+            asort($output);
+            Cache::put('new-post', $output, 1440);
+        } else {
+            $output = Cache::get('new-post');
+        }
+        
         $pageSEO = SEO_Page::where('page', '=', 'Оформить заказ')->first();
         $pageTitle = $pageSEO->titleSEO;
         $pageDescription = $pageSEO->descriptionSEO;
@@ -124,7 +126,7 @@ class FrontPagesController extends Controller
         $orderedProducts = Cart::getContent();
         $totalPrice = Cart::getSubTotal();
         $user = Auth::user();
-        return view('order', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'pageDescription', 'pageKeywords', 'orderedProducts', 'totalPrice', 'user']));
+        return view('order', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'pageDescription', 'pageKeywords', 'orderedProducts', 'totalPrice', 'user', 'output']));
     }
 
     public function makeOrder(StoreOrderRequest $request)
@@ -136,14 +138,16 @@ class FrontPagesController extends Controller
         $order->status = 1;
         $order->delivery = $request->delivery;
         $order->payment = $request->payment;
+        $order->newPost = $request->newPost;
         $order->totalSum = Cart::getSubTotal();
         if(Auth::check()){
             $user = Auth::user();
             $order->user_id = $user->id;
             if (!$user->phone) {
                 $user->phone = $request->phone;
-                $user->save();
             }
+            $user->newPost = $request->newPost;
+            $user->save();
         }
         $order->save();
         $orderedProducts = Cart::getContent();
@@ -154,7 +158,7 @@ class FrontPagesController extends Controller
             $product->save();
         }
         Cart::clear();
-        return redirect()->route('page.index');
+        return redirect()->route('page.thank-you');
     }
 
     public function deliveryPayment()
@@ -280,6 +284,15 @@ class FrontPagesController extends Controller
         $pageDescription = $record->descriptionSEO;
         $pageKeywords = $record->keywordsSEO;
         return view('record-page', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'recordsActive', 'record', 'pageDescription', 'pageKeywords']));
+    }
+
+    public function thankYou()
+    {
+        $pageSEO = SEO_Page::where('page', '=', 'Оформить заказ')->first();
+        $pageTitle = $pageSEO->titleSEO;
+        $pageDescription = $pageSEO->descriptionSEO;
+        $pageKeywords = $pageSEO->keywordsSEO;
+        return view('thank-you', ['productsCategories' => $this->productsCategories, 'recordsCategories' => $this->recordsCategories], compact(['pageTitle', 'pageDescription', 'pageKeywords']));
     }
 
 }

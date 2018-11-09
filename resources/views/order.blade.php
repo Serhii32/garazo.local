@@ -54,14 +54,19 @@
 	                            <div class="form-group row">
 	                            	{!! Form::label('', 'Доставка:', ['class' => 'text-uppercase font-weight-bold col-12']) !!}
 	                            	<div class="col-12 col-md-6">
-	                            		{!! Form::radio('delivery', '1', true, ['id' => 'delivery1']) !!}
+	                            		{!! Form::radio('delivery', '1', true, ['id' => 'delivery1', 'onclick' => 'showNewPost(false)']) !!}
 	                            		{!! Form::label('delivery1', 'Самовывоз', ['class' => 'text-uppercase font-weight-bold mr-4']) !!}
 	                            	</div>
 	                            	<div class="col-12 col-md-6">
-										{!! Form::radio('delivery', '2', false, ['id' => 'delivery2']) !!}
+										{!! Form::radio('delivery', '2', false, ['id' => 'delivery2', 'onclick' => 'showNewPost(true)']) !!}
 	                            		{!! Form::label('delivery2', 'Новая почта', ['class' => 'text-uppercase font-weight-bold']) !!}
 	                            	</div>
 	                            </div>
+								<div id="newPostBlock" class="form-group" style="display: none;">
+									{!! Form::label('newPost', 'Виберите отделение новой почты:', ['class' => 'text-uppercase font-weight-bold']) !!}
+									{!! Form::select('newPost', $output, isset($user->newPost) ? $user->newPost : old('newPost'), ['placeholder' => 'Виберите отделение новой почты'] + ($errors->has('newPost') ? ['class'=>'form-control is-invalid'] : ['class'=>'form-control'])) !!}
+									<span class="text-danger">{{ $errors->first('newPost') }}</span>
+								</div>
 	                            <div class="form-group row">
 	                            	{!! Form::label('', 'Оплата:', ['class' => 'text-uppercase font-weight-bold col-12']) !!}
 	                            	<div class="col-12 col-md-4">
@@ -90,4 +95,5 @@
 		</div>
 	</main>
 	@include('shared.front-footer')
+	<script src="{{ asset('js/order-page-new-post.js') }}"></script>
 @endsection

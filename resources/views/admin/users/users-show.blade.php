@@ -36,6 +36,7 @@
                                     <div class="my-3 h-100 shadow p-2">
                                         <h4 class="text-left text-uppercase text-danger">@if($order->status == 1)Новый заказ @elseif($order->status == 2)Выполняется @elseif($order->status == 3) @elseif($order->status == 4)Отменен Выполнен @else @endif</h4>
                                         <h4 class="text-left text-uppercase">Доставка: @if($order->delivery == 1)Самовывоз @elseif($order->delivery == 2)Новая почта @else @endif </h4>
+                                        @if($order->delivery == 2 && $order->newPost)<h4 class="text-left text-uppercase">Адрес: {{$order->newPost}} </h4> @endif
                                         <h4 class="text-left text-uppercase">Оплата: @if($order->payment == 1)Предоплата на карту @elseif($order->payment == 2)Наложеный платеж @elseif($order->payment == 3)Безналичный @else @endif </h4>
                                         <div>
                                             @foreach($order->products()->get() as $product)

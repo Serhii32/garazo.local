@@ -21,6 +21,7 @@ class CreateOrdersTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('phone');
+            $table->string('newPost')->nullable();
             $table->unsignedTinyInteger('delivery');
             $table->unsignedTinyInteger('payment');
             $table->decimal('totalSum', 10, 2);
