@@ -14,7 +14,6 @@ use App\SEO_Page;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\SearchRequest;
 use GuzzleHttp\Client;
-// use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Support\Facades\Cache;
 
 class FrontPagesController extends Controller

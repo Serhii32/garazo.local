@@ -62,11 +62,19 @@
 	                            		{!! Form::label('delivery2', 'Новая почта', ['class' => 'text-uppercase font-weight-bold']) !!}
 	                            	</div>
 	                            </div>
+	                            @if(count($output))
 								<div id="newPostBlock" class="form-group" style="display: none;">
 									{!! Form::label('newPost', 'Виберите отделение новой почты:', ['class' => 'text-uppercase font-weight-bold']) !!}
 									{!! Form::select('newPost', $output, isset($user->newPost) ? $user->newPost : old('newPost'), ['placeholder' => 'Виберите отделение новой почты'] + ($errors->has('newPost') ? ['class'=>'form-control is-invalid'] : ['class'=>'form-control'])) !!}
 									<span class="text-danger">{{ $errors->first('newPost') }}</span>
 								</div>
+								@else
+									<div id="newPostBlock" class="form-group" style="display: none;">
+		                                {!! Form::label('newPost', 'Введите отделение новой почты:', ['class' => 'text-uppercase font-weight-bold']) !!}
+		                                {!! Form::text('newPost', isset($user->newPost) ? $user->newPost : old('newPost'), ['placeholder'=>'Введите отделение новой почты'] + ($errors->has('newPost') ? ['class'=>'form-control is-invalid'] : ['class'=>'form-control'])) !!}
+		                                <span class="text-danger">{{ $errors->first('newPost') }}</span>
+		                            </div>
+								@endif
 	                            <div class="form-group row">
 	                            	{!! Form::label('', 'Оплата:', ['class' => 'text-uppercase font-weight-bold col-12']) !!}
 	                            	<div class="col-12 col-md-4">
