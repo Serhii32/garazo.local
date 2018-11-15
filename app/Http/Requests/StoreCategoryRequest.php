@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class StoreCategoryRequest extends FormRequest
 {
@@ -13,7 +14,11 @@ class StoreCategoryRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        if (Gate::allows('adminBusiness')) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

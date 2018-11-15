@@ -109,11 +109,4 @@ Route::group(['namespace' => 'User', 'middleware' => ['auth', 'isUser'], 'as' =>
 	// });
 });
 
-//add captcha when registering
-//create good head on pages with all headers
-//admin email, where orders sending
-//admin and user page with nofollow noindex tag
-//admin can delete users with message to email
-//change error pages in views
 //add attributes managing values
-//request autorisation

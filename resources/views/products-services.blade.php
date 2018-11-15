@@ -60,16 +60,16 @@
 	                                <div class="col-12 col-sm-6 my-3">
 	                                    <div class="card h-100 shadow p-2">
 	                                    	<div class="row px-3">
-	                                    		<div class="col-12 col-sm-6 px-4">
-	                                    			<a class="card-link text-secondary p-1" href="{{route('page.products-category', $subCategory->id)}}">
-			                                            <div class="text-center"><img class="img-fluid img-thumbnail w-100" src="{{$subCategory->photo ? asset($subCategory->photo) : asset('img/common/default.png')}}" alt="{{ $subCategory->title }}"></div>
+	                                    		<div class="col-12 px-4">
+	                                    			<a class="card-link text-secondary" href="{{route('page.products-category', $subCategory->id)}}">
+			                                            <div class="text-center"><img class="img-fluid w-100 pt-3" src="{{$subCategory->photo ? asset($subCategory->photo) : asset('img/common/default.png')}}" alt="{{ $subCategory->title }}"></div>
 			                                        </a>
 	                                    		</div>
-	                                    		<div class="col-12 col-sm-6">
-	                                    			<a class="card-link text-secondary p-1" href="{{route('page.products-category', $subCategory->id)}}">
+	                                    		<div class="col-12">
+	                                    			<a class="card-link text-secondary" href="{{route('page.products-category', $subCategory->id)}}">
 			                                            <h5 class="text-center">{{$subCategory->title}}</h5>
 			                                        </a>
-			                                        <p class="text-center text-secondary p-1">
+			                                        <p class="text-center text-secondary">
 			                                        	{{$subCategory->short_description}}
 			                                        </p>
 	                                    		</div>

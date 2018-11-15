@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class StoreSEORequest extends FormRequest
 {
@@ -13,7 +14,11 @@ class StoreSEORequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        if (Gate::allows('adminBusiness')) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

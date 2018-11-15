@@ -13,7 +13,7 @@
 	                            @foreach($products as $product)
 	                                <div class="col-12 col-sm-6 col-md-6 col-lg-4 my-3">
 	                                    <div class="card h-100 shadow p-2">
-	                                        <a class="card-link text-secondary p-1" href="#">
+	                                        <a class="card-link text-secondary p-1" href="{{route('page.product', $product->id)}}">
 	                                            <div class="text-center">
 	                                            	<img class="img-fluid product-photo" src="{{$product->main_photo ? asset($product->main_photo) : asset('img/common/default.png')}}" alt="{{ $product->title }}">
 	                                            	@if($product->most_saled !== 0 && $product->most_saled >= $most_saled_last)

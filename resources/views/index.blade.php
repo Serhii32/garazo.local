@@ -52,16 +52,16 @@
 	                                <div class="col-12 col-sm-6 my-3">
 	                                    <div class="card h-100 shadow p-2">
 	                                    	<div class="row px-3">
-	                                    		<div class="col-12 col-sm-6 px-4">
-	                                    			<a class="card-link text-secondary p-1" href="{{route('page.products-category', $productsCategory->id)}}">
-			                                            <div class="text-center"><img class="img-fluid img-thumbnail w-100" src="{{$productsCategory->photo ? asset($productsCategory->photo) : asset('img/common/default.png')}}" alt="{{ $productsCategory->title }}"></div>
+	                                    		<div class="col-12 px-4">
+	                                    			<a class="card-link text-secondary" href="{{route('page.products-category', $productsCategory->id)}}">
+			                                            <div class="text-center"><img class="img-fluid w-100 pt-3" src="{{$productsCategory->photo ? asset($productsCategory->photo) : asset('img/common/default.png')}}" alt="{{ $productsCategory->title }}"></div>
 			                                        </a>
 	                                    		</div>
-	                                    		<div class="col-12 col-sm-6">
-	                                    			<a class="card-link text-secondary p-1" href="{{route('page.products-category', $productsCategory->id)}}">
+	                                    		<div class="col-12">
+	                                    			<a class="card-link text-secondary" href="{{route('page.products-category', $productsCategory->id)}}">
 			                                            <h5 class="text-center">{{$productsCategory->title}}</h5>
 			                                        </a>
-			                                        <p class="text-center text-secondary p-1">
+			                                        <p class="text-center text-secondary">
 			                                        	{{$productsCategory->short_description}}
 			                                        </p>
 	                                    		</div>
