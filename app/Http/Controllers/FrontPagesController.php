@@ -157,6 +157,17 @@ class FrontPagesController extends Controller
             $product->save();
         }
         Cart::clear();
+
+        $message = "<h4>Благодарим вас за то что сделали заказ на нашем сайте.Ваш заказ отправлен в обработку, наши менеджеры скоро свяжутся с вами для уточнения деталей.</h4>";
+        $headers = "Content-type:text/html;charset=UTF-8" . "\r\n" . "From: kridol@i.ua" . "\r\n";
+        mail($order->email, "<h4>Ваш заказ на сайте garazo.com.ua был принят", $message, $headers);
+        
+        $messageAdmin = "Клиент " . $order->name . "сделал заказ на сайте garazo.com.ua</h4>
+        <h4>Email: " . $order->email . "</h4>
+        <h4>Телефон: " . $order->phone . "</h4>";
+        $headersAdmin = "Content-type:text/html;charset=UTF-8";
+        mail("kridol@i.ua", "Сделан новый заказ на сайте garazo.com.ua", $messageAdmin, $headersAdmin);
+
         return redirect()->route('page.thank-you');
     }
 

@@ -3,7 +3,7 @@
     	<h5 class="text-dark font-weight-bold text-uppercase text-center p-4 mb-0 styled-background">Товары и услуги</h5>
 
         <ul class="list-group list-group-flush">
-
+            <h4 class="text-dark text-uppercase px-4 mb-0 text-center styled-background">067-430-69-18</h4>
         	@foreach($productsCategories as $productsCategory)
 				<li class="list-group-item p-2 styled-background">
 	                <a class="card-link text-dark font-weight-bold" href="{{route('page.products-category', $productsCategory->id)}}">{{$productsCategory->title}} </a>
