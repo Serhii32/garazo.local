@@ -68,8 +68,11 @@ class HomeController extends Controller
     public function cancelOrder(Request $request, int $id)
     {
         $order = Order::findOrFail($id);
-        $order->status = $request->status;
-        $order->save();
-        return back()->with(['message' => 'Заказ успешно отменен']);
+        if(Auth::user()->id == $order->user_id) {
+            $order->status = $request->status;
+            $order->save();
+            return back()->with(['message' => 'Заказ успешно обновлен']);
+        }
+        return abort(403);
     }
 }
